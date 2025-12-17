@@ -1,0 +1,556 @@
+%!PS-Adobe-3.0
+%%DocumentNeededResources: font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Helvetica-Oblique
+%%+ font Helvetica-BoldOblique
+%%+ font Symbol
+%%+ font Times-Roman
+%%+ font Times-Bold
+%%+ font Times-Italic
+%%+ font Times-BoldItalic
+%%+ font Symbol
+%%+ font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Helvetica-Oblique
+%%+ font Helvetica-BoldOblique
+%%+ font Symbol
+%%DocumentMedia: a4 595 841 0 () ()
+%%Title: R Graphics Output
+%%Creator: R Software
+%%Pages: (atend)
+%%Orientation: Landscape
+%%BoundingBox: 18 18 577 824
+%%EndComments
+%%BeginProlog
+/bp  { gs sRGB 595.00 0 translate 90 rotate gs } def
+% begin .ps.prolog
+/gs  { gsave } bind def
+/gr  { grestore } bind def
+/ep  { showpage gr gr } bind def
+/m   { moveto } bind def
+/l  { rlineto } bind def
+/np  { newpath } bind def
+/cp  { closepath } bind def
+/f   { fill } bind def
+/o   { stroke } bind def
+/c   { newpath 0 360 arc } bind def
+/r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } bind def
+/p1  { stroke } bind def
+/p2  { gsave bg fill grestore newpath } bind def
+/p3  { gsave bg fill grestore stroke } bind def
+/p6  { gsave bg eofill grestore newpath } bind def
+/p7  { gsave bg eofill grestore stroke } bind def
+/t   { 5 -2 roll moveto gsave rotate
+       1 index stringwidth pop
+       mul neg 0 rmoveto show grestore } bind def
+/ta  { 4 -2 roll moveto gsave rotate show } bind def
+/tb  { 2 -1 roll 0 rmoveto show } bind def
+/cl  { grestore gsave newpath 3 index 3 index moveto 1 index
+       4 -1 roll lineto  exch 1 index lineto lineto
+       closepath clip newpath } bind def
+/rgb { setrgbcolor } bind def
+/s   { scalefont setfont } bind def
+% end   .ps.prolog
+/sRGB { [ /CIEBasedABC
+          << /DecodeLMN
+               [ { dup 0.03928 le
+                        {12.92321 div}
+                        {0.055 add 1.055 div 2.4 exp }
+                     ifelse
+                 } bind dup dup
+               ]
+             /MatrixLMN [0.412457 0.212673 0.019334
+                         0.357576 0.715152 0.119192
+                         0.180437 0.072175 0.950301]
+             /WhitePoint [0.9505 1.0 1.0890]
+           >>
+         ] setcolorspace } bind def
+/srgb { setcolor } bind def
+%%IncludeResource: font Helvetica
+/Helvetica findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font1 exch definefont pop
+%%IncludeResource: font Helvetica-Bold
+/Helvetica-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font2 exch definefont pop
+%%IncludeResource: font Helvetica-Oblique
+/Helvetica-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font3 exch definefont pop
+%%IncludeResource: font Helvetica-BoldOblique
+/Helvetica-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font4 exch definefont pop
+%%IncludeResource: font Symbol
+/Symbol findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  currentdict
+  end
+/Font5 exch definefont pop
+%%IncludeResource: font Times-Roman
+/Times-Roman findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font6 exch definefont pop
+%%IncludeResource: font Times-Bold
+/Times-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font7 exch definefont pop
+%%IncludeResource: font Times-Italic
+/Times-Italic findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font8 exch definefont pop
+%%IncludeResource: font Times-BoldItalic
+/Times-BoldItalic findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font9 exch definefont pop
+%%IncludeResource: font Symbol
+/Symbol findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  currentdict
+  end
+/Font10 exch definefont pop
+%%IncludeResource: font Helvetica
+/Helvetica findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font11 exch definefont pop
+%%IncludeResource: font Helvetica-Bold
+/Helvetica-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font12 exch definefont pop
+%%IncludeResource: font Helvetica-Oblique
+/Helvetica-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font13 exch definefont pop
+%%IncludeResource: font Helvetica-BoldOblique
+/Helvetica-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font14 exch definefont pop
+%%IncludeResource: font Symbol
+/Symbol findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  currentdict
+  end
+/Font15 exch definefont pop
+%%EndProlog
+%%Page: 1 1
+bp
+18.00 417.48 118.74 577.28 cl
+/Font2 findfont 9 s
+0 0 0 srgb
+46.36 565.02 (Obser) 0 ta
+0.090 (ved/) tb gr
+68.37 554.56 (Expected) .5 0 t
+46.51 445.99 90.22 548.76 cl
+/bg { 1 1 1 srgb } def
+46.51 445.99 43.71 2.70 r p2
+/bg { 1 1 0.9608 srgb } def
+46.51 448.70 43.71 2.70 r p2
+/bg { 1 1 0.8980 srgb } def
+46.51 451.40 43.71 2.70 r p2
+/bg { 1 1 0.8353 srgb } def
+46.51 454.11 43.71 2.70 r p2
+/bg { 1 1 0.7961 srgb } def
+46.51 456.81 43.71 2.70 r p2
+/bg { 1 1 0.7333 srgb } def
+46.51 459.52 43.71 2.70 r p2
+/bg { 1 1 0.6745 srgb } def
+46.51 462.22 43.71 2.70 r p2
+/bg { 1 1 0.6314 srgb } def
+46.51 464.93 43.71 2.70 r p2
+/bg { 1 1 0.5725 srgb } def
+46.51 467.63 43.71 2.70 r p2
+/bg { 1 1 0.5098 srgb } def
+46.51 470.33 43.71 2.70 r p2
+/bg { 1 1 0.4471 srgb } def
+46.51 473.04 43.71 2.70 r p2
+/bg { 1 1 0.4078 srgb } def
+46.51 475.74 43.71 2.70 r p2
+/bg { 1 1 0.3451 srgb } def
+46.51 478.45 43.71 2.70 r p2
+/bg { 1 1 0.2863 srgb } def
+46.51 481.15 43.71 2.70 r p2
+/bg { 1 1 0.2431 srgb } def
+46.51 483.86 43.71 2.70 r p2
+/bg { 1 1 0.1843 srgb } def
+46.51 486.56 43.71 2.70 r p2
+/bg { 1 1 0.1216 srgb } def
+46.51 489.27 43.71 2.70 r p2
+/bg { 1 1 0.0824 srgb } def
+46.51 491.97 43.71 2.70 r p2
+/bg { 1 1 0.0196 srgb } def
+46.51 494.67 43.71 2.70 r p2
+/bg { 1 0.9804 0 srgb } def
+46.51 497.38 43.71 2.70 r p2
+/bg { 1 0.9176 0 srgb } def
+46.51 500.08 43.71 2.70 r p2
+/bg { 1 0.8784 0 srgb } def
+46.51 502.79 43.71 2.70 r p2
+/bg { 1 0.8157 0 srgb } def
+46.51 505.49 43.71 2.70 r p2
+/bg { 1 0.7569 0 srgb } def
+46.51 508.20 43.71 2.70 r p2
+/bg { 1 0.7137 0 srgb } def
+46.51 510.90 43.71 2.70 r p2
+/bg { 1 0.6549 0 srgb } def
+46.51 513.61 43.71 2.70 r p2
+/bg { 1 0.5922 0 srgb } def
+46.51 516.31 43.71 2.70 r p2
+/bg { 1 0.5529 0 srgb } def
+46.51 519.01 43.71 2.70 r p2
+/bg { 1 0.4902 0 srgb } def
+46.51 521.72 43.71 2.70 r p2
+/bg { 1 0.4275 0 srgb } def
+46.51 524.42 43.71 2.70 r p2
+/bg { 1 0.3686 0 srgb } def
+46.51 527.13 43.71 2.70 r p2
+/bg { 1 0.3255 0 srgb } def
+46.51 529.83 43.71 2.70 r p2
+/bg { 1 0.2667 0 srgb } def
+46.51 532.54 43.71 2.70 r p2
+/bg { 1 0.2039 0 srgb } def
+46.51 535.24 43.71 2.70 r p2
+/bg { 1 0.1647 0 srgb } def
+46.51 537.95 43.71 2.70 r p2
+/bg { 1 0.1020 0 srgb } def
+46.51 540.65 43.71 2.70 r p2
+/bg { 1 0.0392 0 srgb } def
+46.51 543.35 43.71 2.70 r p2
+/bg { 1 0 0 srgb } def
+46.51 546.06 43.71 2.70 r p2
+18.00 18.00 823.89 577.28 cl
+0 0 0 srgb
+0.75 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+90.22 447.35 m
+0 100.06 l
+o
+np
+90.22 447.35 m
+4.76 0 l
+o
+np
+90.22 464.02 m
+4.76 0 l
+o
+np
+90.22 480.70 m
+4.76 0 l
+o
+np
+90.22 497.38 m
+4.76 0 l
+o
+np
+90.22 514.06 m
+4.76 0 l
+o
+np
+90.22 530.73 m
+4.76 0 l
+o
+np
+90.22 547.41 m
+4.76 0 l
+o
+/Font1 findfont 8 s
+99.73 444.47 (1) 0 0 t
+99.73 461.15 (1.1) 0 0 t
+99.73 477.83 (1.2) 0 0 t
+99.73 494.51 (1.3) 0 0 t
+99.73 511.18 (1.4) 0 0 t
+99.73 527.86 (1.5) 0 0 t
+99.73 544.54 (1.6) 0 0 t
+np
+46.51 445.99 m
+43.71 0 l
+0 102.77 l
+-43.71 0 l
+0 -102.77 l
+o
+147.25 206.31 795.38 548.76 cl
+118.74 177.79 823.89 577.28 cl
+/Font2 findfont 10 s
+0 0 0 srgb
+376.28 565.13 (T) 0 ta
+-0.800 (op 10 Reactome pathwa) tb
+-0.200 (ys enric) tb
+-0.100 (hed in ) tb gr
+252.93 553.73 (') 0 ta
+-0.600 (shRNA p68/p72 knoc) tb
+-0.200 (kdo) tb
+-0.150 (wn; gr) tb
+-0.200 (o) tb
+-0.150 (wing' vs 'contr) tb
+-0.200 (ol; gr) tb
+-0.200 (o) tb
+-0.150 (wing' on 'Affymetrix Arra) tb
+-0.200 (y MOE430A' ) tb gr
+411.57 542.32 (\(Fisher-e) 0 ta
+-0.150 (xact, FDR < 0.1\)) tb gr
+147.25 206.31 795.38 548.76 cl
+0.8000 0.8000 0.8000 srgb
+2.05 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+348.62 412.34 m
+0.12 0.20 l
+0.64 1.08 l
+1.21 2.03 l
+1.42 2.40 l
+1.31 2.20 l
+1.11 1.85 l
+0.94 1.59 l
+0.70 1.17 l
+0.88 1.49 l
+0.97 1.63 l
+1.14 1.92 l
+1.36 2.27 l
+1.41 2.38 l
+1.11 1.87 l
+0.51 0.85 l
+0.06 0.10 l
+o
+0.6000 0.6000 0.6000 srgb
+15.00 setlinewidth
+[] 0 setdash
+np
+442.85 281.13 m
+0 -0.25 l
+0 -1.33 l
+0 -2.28 l
+0 -2.37 l
+0.01 -2.01 l
+0 -1.65 l
+0 -1.22 l
+0 -1.53 l
+0 -1.71 l
+0 -2.08 l
+0 -2.42 l
+0 -2.15 l
+0 -1.09 l
+0 -0.14 l
+o
+0.8000 0.8000 0.8000 srgb
+4.26 setlinewidth
+[] 0 setdash
+np
+427.03 291.37 m
+-0.20 -0.09 l
+-1.13 -0.50 l
+-2.17 -0.98 l
+-2.62 -1.17 l
+-2.48 -1.12 l
+-2.10 -0.94 l
+-1.79 -0.80 l
+-1.64 -0.74 l
+-0.09 -0.04 l
+-1.64 -0.73 l
+-1.77 -0.80 l
+-2.08 -0.93 l
+-2.46 -1.11 l
+-2.62 -1.18 l
+-2.22 -0.99 l
+-1.20 -0.54 l
+-0.23 -0.10 l
+0 0 l
+o
+3.43 setlinewidth
+[] 0 setdash
+np
+431.15 252.10 m
+-0.18 0.10 l
+-1.01 0.58 l
+-2.07 1.17 l
+-2.69 1.54 l
+-2.72 1.55 l
+-2.41 1.38 l
+-2.06 1.17 l
+-1.81 1.04 l
+-1.52 0.86 l
+-1.71 0.98 l
+-1.83 1.04 l
+-2.10 1.20 l
+-2.45 1.40 l
+-2.74 1.56 l
+-2.65 1.51 l
+-1.96 1.12 l
+-0.90 0.51 l
+-0.12 0.08 l
+o
+1.50 setlinewidth
+[] 0 setdash
+np
+588.15 304.50 m
+0.09 0.21 l
+0.49 1.18 l
+0.92 2.17 l
+1.05 2.48 l
+0.95 2.25 l
+0.79 1.86 l
+0.68 1.62 l
+0.37 0.85 l
+0.65 1.56 l
+0.72 1.70 l
+0.86 2.03 l
+1.01 2.39 l
+1.03 2.44 l
+0.76 1.79 l
+0.29 0.68 l
+0.01 0.04 l
+o
+/bg { 1 0.4078 0 srgb } def
+0 0 0 srgb
+0.75 setlinewidth
+[] 0 setdash
+465.16 509.66 26.42 c p3
+/bg { 1 0.3059 0 srgb } def
+339.19 396.50 18.44 c p3
+/bg { 1 0.2863 0 srgb } def
+442.85 298.47 17.34 c p3
+/bg { 1 0.2431 0 srgb } def
+442.86 245.41 13.49 c p3
+/bg { 1 0.1647 0 srgb } def
+582.36 290.81 14.86 c p3
+/bg { 1 0.1412 0 srgb } def
+591.62 457.68 10.73 c p3
+/bg { 1 0.1020 0 srgb } def
+390.81 275.11 8.53 c p3
+/bg { 1 0.0392 0 srgb } def
+501.76 421.13 7.43 c p3
+/bg { 1 0.0196 0 srgb } def
+366.89 443.05 6.61 c p3
+/bg { 1 0 0 srgb } def
+603.43 340.65 11.84 c p3
+118.74 177.79 823.89 577.28 cl
+/Font11 findfont 8 s
+0 0 0 srgb
+435.15 507.54 (http://reactome) 0 ta
+-0.120 (...) tb gr
+309.18 394.38 (http://reactome) 0 ta
+-0.120 (...) tb gr
+412.83 296.35 (http://reactome) 0 ta
+-0.120 (...) tb gr
+412.85 243.29 (http://reactome) 0 ta
+-0.120 (...) tb gr
+552.34 288.69 (http://reactome) 0 ta
+-0.120 (...) tb gr
+561.60 455.56 (http://reactome) 0 ta
+-0.120 (...) tb gr
+360.79 272.99 (http://reactome) 0 ta
+-0.120 (...) tb gr
+471.75 419.01 (http://reactome) 0 ta
+-0.120 (...) tb gr
+336.87 440.93 (http://reactome) 0 ta
+-0.120 (...) tb gr
+573.42 338.53 (http://reactome) 0 ta
+-0.120 (...) tb gr
+18.00 18.00 823.89 177.79 cl
+18.00 18.00 823.89 177.79 cl
+/bg { 0.8980 0.8980 0.8980 srgb } def
+0 0 0 srgb
+0.75 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+37.01 37.01 767.87 140.79 r p3
+/Font1 findfont 8 s
+51.26 165.42 (http://reactome) 0 ta
+-0.120 (... - Processing of Capped Intron-Containing Pre-mRNA) tb gr
+51.26 155.91 (http://reactome) 0 ta
+-0.120 (... - Response to ele) tb
+-0.240 (v) tb
+-0.200 (ated platelet cytosolic Ca2+) tb gr
+51.26 146.41 (http://reactome) 0 ta
+-0.120 (... - S Phase) tb gr
+51.26 136.91 (http://reactome) 0 ta
+-0.120 (... - Synthesis of DNA) tb gr
+51.26 127.40 (http://reactome) 0 ta
+-0.120 (... - F) tb
+-0.400 (atty acid, tr) tb
+0.120 (iacylglycerol, and k) tb
+-0.160 (etone body metabolism) tb gr
+51.26 117.90 (http://reactome) 0 ta
+-0.120 (... - Metabolism of n) tb
+-0.080 (ucleotides) tb gr
+51.26 108.39 (http://reactome) 0 ta
+-0.120 (... - Global Genome Nucleotide Excision Repair \(GG-NER\)) tb gr
+51.26 98.89 (http://reactome) 0 ta
+-0.120 (... - T) tb
+-0.960 (r) tb
+-0.080 (anslation) tb gr
+51.26 89.39 (http://reactome) 0 ta
+-0.120 (... - Non-integr) tb
+0.120 (in membr) tb
+-0.080 (ane-ECM inter) tb
+-0.080 (actions) tb gr
+51.26 79.88 (http://reactome) 0 ta
+-0.120 (... - The citr) tb
+0.120 (ic acid \(TCA\) cycle and respir) tb
+-0.080 (ator) tb
+0.240 (y electron tr) tb
+-0.080 (anspor) tb
+0.320 (t) tb gr
+ep
+%%Trailer
+%%Pages: 1
+%%EOF

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-23</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="control; differentiated">
+                <assay>VSD-DM_pSuperR-1MA</assay>
+                <assay>VSD-DM_pSuperR-3MA</assay>
+                <assay>VSD-DM_pSuperR-2MA</assay>
+            </assay_group>
+            <assay_group id="g2" label="control; growing">
+                <assay>VSD-GM_pSuperR-4MA</assay>
+                <assay>VSD-GM_pSuperR-3MA</assay>
+                <assay>VSD-GM_pSuperR-1MA</assay>
+            </assay_group>
+            <assay_group id="g3" label="shRNA p68/p72 knockdown; differentiated">
+                <assay>VSD-DM_pSuperR_p68-1MA</assay>
+                <assay>VSD-DM_pSuperR_p68-3MA</assay>
+                <assay>VSD-DM_pSuperR_p68-2MA</assay>
+            </assay_group>
+            <assay_group id="g4" label="shRNA p68/p72 knockdown; growing">
+                <assay>VSD-GM_pSuperR_p68-3MA</assay>
+                <assay>VSD-GM_pSuperR_p68-2MA</assay>
+                <assay>VSD-GM_pSuperR_p68-4MA</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g3">
+                <name>'shRNA p68/p72 knockdown; differentiated' vs 'control; differentiated' on 'Affymetrix Array MOE430A'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g2_g4">
+                <name>'shRNA p68/p72 knockdown; growing' vs 'control; growing' on 'Affymetrix Array MOE430A'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+    <analytics>
+        <array_design>A-AFFY-24</array_design>
+        <assay_groups>
+            <assay_group id="g5" label="control; differentiated">
+                <assay>VSD-DM_pSuperR-2MB</assay>
+                <assay>VSD-DM_pSuperR-1MB</assay>
+                <assay>VSD-DM_pSuperR-3MB</assay>
+            </assay_group>
+            <assay_group id="g6" label="control; growing">
+                <assay>VSD-GM_pSuperR-1MB</assay>
+                <assay>VSD-GM_pSuperR-3MB</assay>
+                <assay>VSD-GM_pSuperR-2MB</assay>
+            </assay_group>
+            <assay_group id="g7" label="shRNA p68/p72 knockdown; differentiated">
+                <assay>VSD-DM_pSuperR_p68-1MB</assay>
+                <assay>VSD-DM_pSuperR_p68-2MB</assay>
+                <assay>VSD-DM_pSuperR_p68-3MB</assay>
+            </assay_group>
+            <assay_group id="g8" label="shRNA p68/p72 knockdown; growing">
+                <assay>VSD-GM_pSuperR_p68-3MB</assay>
+                <assay>VSD-GM_pSuperR_p68-1MB</assay>
+                <assay>VSD-GM_pSuperR_p68-2MB</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g5_g7">
+                <name>'shRNA p68/p72 knockdown; differentiated' vs 'control; differentiated' on 'Affymetrix Array MOE430B'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g7</test_assay_group>
+            </contrast>
+            <contrast id="g6_g8">
+                <name>'shRNA p68/p72 knockdown; growing' vs 'control; growing' on 'Affymetrix Array MOE430B'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g8</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

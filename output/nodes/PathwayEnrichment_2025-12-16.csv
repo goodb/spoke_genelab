@@ -1,0 +1,130 @@
+identifier,name,enrichment_type,contrast_id,term_id,experiment_accession,p_value,adj_p_value,effect_size,genes_total,genes_significant
+E-GEOD-5305_g1_g3_mitotic cytokinesis,GO:0000281,go,g1_g3,mitotic cytokinesis,E-GEOD-5305,6.57917294741769e-05,0.0326901779775793,2.11029155379127,23,18
+E-GEOD-5305_g1_g3_cyclin-dependent protein kinase holoenzyme complex,GO:0000307,go,g1_g3,cyclin-dependent protein kinase holoenzyme complex,E-GEOD-5305,0.0006107141816683,0.0672020489905041,2.28164001328715,13,11
+E-GEOD-5305_g1_g3_double-strand break repair via break-induced replication,GO:0000727,go,g1_g3,double-strand break repair via break-induced replication,E-GEOD-5305,0.0009569058491206,0.0760474342870617,2.69648365206663,7,7
+"E-GEOD-5305_g1_g3_chromosome, centromeric region",GO:0000775,go,g1_g3,"chromosome, centromeric region",E-GEOD-5305,0.000257394693236,0.0460253885842658,1.63715078875474,56,34
+E-GEOD-5305_g1_g3_kinetochore,GO:0000776,go,g1_g3,kinetochore,E-GEOD-5305,0.0006808798670435,0.0695713321289823,1.58899929496783,56,33
+E-GEOD-5305_g1_g3_condensed chromosome kinetochore,GO:0000777,go,g1_g3,condensed chromosome kinetochore,E-GEOD-5305,8.91444352912049e-05,0.0326901779775793,1.79765576804442,42,28
+E-GEOD-5305_g1_g3_spindle pole,GO:0000922,go,g1_g3,spindle pole,E-GEOD-5305,0.0004489671074553,0.0574095899334326,1.62806560124777,53,32
+E-GEOD-5305_g1_g3_aminoacyl-tRNA ligase activity,GO:0004812,go,g1_g3,aminoacyl-tRNA ligase activity,E-GEOD-5305,0.0002369013190118,0.0460253885842658,2.12880288321049,19,15
+E-GEOD-5305_g1_g3_extracellular matrix structural constituent,GO:0005201,go,g1_g3,extracellular matrix structural constituent,E-GEOD-5305,1.28367301096598e-06,0.0018362942421868,1.99026174319203,42,31
+E-GEOD-5305_g1_g3_glycosaminoglycan binding,GO:0005539,go,g1_g3,glycosaminoglycan binding,E-GEOD-5305,0.0008732197171416,0.0757055033558294,2.42683528685996,10,9
+E-GEOD-5305_g1_g3_basement membrane,GO:0005604,go,g1_g3,basement membrane,E-GEOD-5305,8.19414668896921e-05,0.0326901779775793,1.84496249878243,38,26
+E-GEOD-5305_g1_g3_spindle,GO:0005819,go,g1_g3,spindle,E-GEOD-5305,0.0004615241413732,0.0574095899334326,1.54084780118093,70,40
+E-GEOD-5305_g1_g3_DNA replication,GO:0006260,go,g1_g3,DNA replication,E-GEOD-5305,0.0002480835788437,0.0460253885842658,1.62718841072986,58,35
+E-GEOD-5305_g1_g3_tRNA aminoacylation for protein translation,GO:0006418,go,g1_g3,tRNA aminoacylation for protein translation,E-GEOD-5305,0.0010908484149546,0.083507882195434,2.06201691040389,17,13
+E-GEOD-5305_g1_g3_fatty acid metabolic process,GO:0006631,go,g1_g3,fatty acid metabolic process,E-GEOD-5305,0.0006472238940939,0.0685817615186265,1.58069731328044,58,34
+E-GEOD-5305_g1_g3_regulation of muscle contraction,GO:0006937,go,g1_g3,regulation of muscle contraction,E-GEOD-5305,0.0001417885274325,0.040565697698445,2.47177668106107,12,11
+E-GEOD-5305_g1_g3_mitotic spindle assembly checkpoint,GO:0007094,go,g1_g3,mitotic spindle assembly checkpoint,E-GEOD-5305,0.0008638650751401,0.0757055033558294,2.1571869216533,15,12
+E-GEOD-5305_g1_g3_heparin binding,GO:0008201,go,g1_g3,heparin binding,E-GEOD-5305,0.0011091574706139,0.083507882195434,1.56886321574785,55,32
+E-GEOD-5305_g1_g3_steroid metabolic process,GO:0008202,go,g1_g3,steroid metabolic process,E-GEOD-5305,0.0005309226663378,0.0629462976018837,1.74907047701619,37,24
+E-GEOD-5305_g1_g3_cellular amino acid biosynthetic process,GO:0008652,go,g1_g3,cellular amino acid biosynthetic process,E-GEOD-5305,0.0001417885274325,0.040565697698445,2.47177668106107,12,11
+E-GEOD-5305_g1_g3_positive regulation of cell-substrate adhesion,GO:0010811,go,g1_g3,positive regulation of cell-substrate adhesion,E-GEOD-5305,0.000388847081439,0.0529757857141423,2.19089296730413,16,13
+E-GEOD-5305_g1_g3_actin cytoskeleton,GO:0015629,go,g1_g3,actin cytoskeleton,E-GEOD-5305,0.0005500375533195,0.0629462976018837,1.55890461135102,64,37
+E-GEOD-5305_g1_g3_sterol biosynthetic process,GO:0016126,go,g1_g3,sterol biosynthetic process,E-GEOD-5305,0.0001728466711264,0.0449558478266254,2.22063359581957,17,14
+E-GEOD-5305_g1_g3_ligase activity,GO:0016874,go,g1_g3,ligase activity,E-GEOD-5305,9.14090960575445e-05,0.0326901779775793,1.77722786158937,44,29
+E-GEOD-5305_g1_g3_myofibril,GO:0030016,go,g1_g3,myofibril,E-GEOD-5305,0.0002369013190118,0.0460253885842658,2.12880288321049,19,15
+E-GEOD-5305_g1_g3_sarcomere,GO:0030017,go,g1_g3,sarcomere,E-GEOD-5305,0.0002369013190118,0.0460253885842658,2.12880288321049,19,15
+E-GEOD-5305_g1_g3_extracellular matrix structural constituent conferring tensile strength,GO:0030020,go,g1_g3,extracellular matrix structural constituent conferring tensile strength,E-GEOD-5305,0.000388847081439,0.0529757857141423,2.19089296730413,16,13
+E-GEOD-5305_g1_g3_extracellular matrix organization,GO:0030198,go,g1_g3,extracellular matrix organization,E-GEOD-5305,0.0002927884941669,0.0492745812830361,1.69995708499852,46,29
+E-GEOD-5305_g1_g3_negative regulation of cell migration,GO:0030336,go,g1_g3,negative regulation of cell migration,E-GEOD-5305,0.0009219049504064,0.0760474342870617,1.68530228254164,40,25
+E-GEOD-5305_g1_g3_midbody,GO:0030496,go,g1_g3,midbody,E-GEOD-5305,8.76596022184266e-06,0.0062698530486729,1.79765576804442,54,36
+E-GEOD-5305_g1_g3_epithelial cell differentiation,GO:0030855,go,g1_g3,epithelial cell differentiation,E-GEOD-5305,0.0007175743417519,0.0707924204052558,1.96107901968482,22,16
+E-GEOD-5305_g1_g3_endoplasmic reticulum unfolded protein response,GO:0030968,go,g1_g3,endoplasmic reticulum unfolded protein response,E-GEOD-5305,0.000353724847388,0.0529757857141423,1.9930531341362,23,17
+E-GEOD-5305_g1_g3_extracellular matrix,GO:0031012,go,g1_g3,extracellular matrix,E-GEOD-5305,8.73008373638177e-06,0.0062698530486729,1.66756225851489,76,47
+E-GEOD-5305_g1_g3_cellular response to amino acid starvation,GO:0034198,go,g1_g3,cellular response to amino acid starvation,E-GEOD-5305,0.0008638650751401,0.0757055033558294,2.1571869216533,15,12
+E-GEOD-5305_g1_g3_positive regulation of nitric oxide biosynthetic process,GO:0045429,go,g1_g3,positive regulation of nitric oxide biosynthetic process,E-GEOD-5305,0.0003532562417728,0.0529757857141423,2.45134877460602,11,10
+E-GEOD-5305_g1_g3_muscle fiber development,GO:0048747,go,g1_g3,muscle fiber development,E-GEOD-5305,0.0009569058491206,0.0760474342870617,2.69648365206663,7,7
+E-GEOD-5305_g1_g3_actin filament binding,GO:0051015,go,g1_g3,actin filament binding,E-GEOD-5305,9.36028635071567e-07,0.0018362942421868,1.76020460621016,72,47
+E-GEOD-5305_g1_g3_cellular response to amino acid stimulus,GO:0071230,go,g1_g3,cellular response to amino acid stimulus,E-GEOD-5305,0.0008553181421332,0.0757055033558294,1.86679637450766,26,18
+E-GEOD-5305_g2_g4_aminoacyl-tRNA ligase activity,GO:0004812,go,g2_g4,aminoacyl-tRNA ligase activity,E-GEOD-5305,4.23550566510822e-05,0.0278368241811278,2.24953560371517,17,15
+E-GEOD-5305_g2_g4_insulin-like growth factor binding,GO:0005520,go,g2_g4,insulin-like growth factor binding,E-GEOD-5305,4.52631287498013e-05,0.0278368241811278,2.36736842105263,14,13
+E-GEOD-5305_g2_g4_mitochondrial matrix,GO:0005759,go,g2_g4,mitochondrial matrix,E-GEOD-5305,0.000127345386187,0.0652645104208768,1.55801169590643,72,44
+E-GEOD-5305_g2_g4_translation,GO:0006412,go,g2_g4,translation,E-GEOD-5305,4.24144548661748e-06,0.0065212224356743,1.61966563467492,85,54
+E-GEOD-5305_g2_g4_tRNA aminoacylation for protein translation,GO:0006418,go,g2_g4,tRNA aminoacylation for protein translation,E-GEOD-5305,0.000216682304123,0.0832872606472834,2.20954385964912,15,13
+E-GEOD-5305_g2_g4_ligase activity,GO:0016874,go,g2_g4,ligase activity,E-GEOD-5305,2.71471630318501e-06,0.0065212224356743,1.89728274173807,43,32
+E-GEOD-5305_g2_g4_electron transport chain,GO:0022900,go,g2_g4,electron transport chain,E-GEOD-5305,1.53702254396956e-05,0.0157544810756879,2.18526315789474,21,18
+E-GEOD-5305_g2_g4_respirasome,GO:0070469,go,g2_g4,respirasome,E-GEOD-5305,0.0002003024291079,0.0832872606472834,1.9376,25,19
+E-GEOD-5305_g2_g4_cellular oxidant detoxification,GO:0098869,go,g2_g4,cellular oxidant detoxification,E-GEOD-5305,0.0002451745320996,0.0837679651340367,1.88849902534113,27,20
+E-GEOD-5305_g2_g4_Translesion synthesis by Y family DNA polymerases bypasses lesions on DNA template,R-MMU-110313,reactome,g2_g4,Translesion synthesis by Y family DNA polymerases bypasses lesions on DNA template,E-GEOD-5305,0.0035077699398053,0.0833095360703779,1.84872443601096,17,13
+E-GEOD-5305_g2_g4_Recognition of DNA damage by PCNA-containing replication complex,R-MMU-110314,reactome,g2_g4,Recognition of DNA damage by PCNA-containing replication complex,E-GEOD-5305,0.0009859231551856,0.0430078740105845,2.19778429455849,11,10
+E-GEOD-5305_g2_g4_Resolution of AP sites via the multiple-nucleotide patch replacement pathway,R-MMU-110373,reactome,g2_g4,Resolution of AP sites via the multiple-nucleotide patch replacement pathway,E-GEOD-5305,0.0004007577789551,0.0263575308466631,2.09522102747909,15,13
+E-GEOD-5305_g2_g4_The citric acid (TCA) cycle and respiratory electron transport,R-MMU-1428517,reactome,g2_g4,The citric acid (TCA) cycle and respiratory electron transport,E-GEOD-5305,0.0002915831197861,0.0247822589186562,1.6292270531401,46,31
+E-GEOD-5305_g2_g4_Glutathione conjugation,R-MMU-156590,reactome,g2_g4,Glutathione conjugation,E-GEOD-5305,0.0001870434505898,0.0199902687817873,2.11536738351254,16,14
+E-GEOD-5305_g2_g4_Telomere Maintenance,R-MMU-157579,reactome,g2_g4,Telomere Maintenance,E-GEOD-5305,0.0012391725498199,0.0430078740105845,1.84195255162997,21,16
+E-GEOD-5305_g2_g4_Metabolism of nucleotides,R-MMU-15869,reactome,g2_g4,Metabolism of nucleotides,E-GEOD-5305,0.005062277693616,0.090171821417535,1.54455396256472,36,23
+"E-GEOD-5305_g2_g4_Respiratory electron transport, ATP synthesis by chemiosmotic coupling, and heat production by uncoupling proteins.",R-MMU-163200,reactome,g2_g4,"Respiratory electron transport, ATP synthesis by chemiosmotic coupling, and heat production by uncoupling proteins.",E-GEOD-5305,0.0013581433898079,0.0430078740105845,1.69229390681004,30,21
+E-GEOD-5305_g2_g4_mTOR signalling,R-MMU-165159,reactome,g2_g4,mTOR signalling,E-GEOD-5305,0.004817386096215,0.090171821417535,2.1489446435683,9,8
+E-GEOD-5305_g2_g4_Autodegradation of Cdh1 by Cdh1:APC/C,R-MMU-174084,reactome,g2_g4,Autodegradation of Cdh1 by Cdh1:APC/C,E-GEOD-5305,0.0036613448208178,0.0846067519405194,1.67369727047146,26,18
+E-GEOD-5305_g2_g4_APC/C-mediated degradation of cell cycle proteins,R-MMU-174143,reactome,g2_g4,APC/C-mediated degradation of cell cycle proteins,E-GEOD-5305,0.0048624755104999,0.090171821417535,1.56430529200928,34,22
+E-GEOD-5305_g2_g4_APC/C:Cdh1 mediated degradation of Cdc20 and other APC/C:Cdh1 targeted proteins in late mitosis/early G1,R-MMU-174178,reactome,g2_g4,APC/C:Cdh1 mediated degradation of Cdc20 and other APC/C:Cdh1 targeted proteins in late mitosis/early G1,E-GEOD-5305,0.0043462019771704,0.090171821417535,1.61170848267622,30,20
+E-GEOD-5305_g2_g4_Glutathione synthesis and recycling,R-MMU-174403,reactome,g2_g4,Glutathione synthesis and recycling,E-GEOD-5305,0.0049693864260588,0.090171821417535,2.41756272401434,6,6
+E-GEOD-5305_g2_g4_Telomere C-strand (Lagging Strand) Synthesis,R-MMU-174417,reactome,g2_g4,Telomere C-strand (Lagging Strand) Synthesis,E-GEOD-5305,0.0013268532018713,0.0430078740105845,1.96426971326165,16,13
+E-GEOD-5305_g2_g4_Activation of APC/C and APC/C:Cdc20 mediated degradation of mitotic proteins,R-MMU-176814,reactome,g2_g4,Activation of APC/C and APC/C:Cdc20 mediated degradation of mitotic proteins,E-GEOD-5305,0.0046245989423141,0.090171821417535,1.58652553763441,32,21
+E-GEOD-5305_g2_g4_Extension of Telomeres,R-MMU-180786,reactome,g2_g4,Extension of Telomeres,E-GEOD-5305,0.0013268532018713,0.0430078740105845,1.96426971326165,16,13
+E-GEOD-5305_g2_g4_Keratan sulfate degradation,R-MMU-2022857,reactome,g2_g4,Keratan sulfate degradation,E-GEOD-5305,0.0020490412083674,0.0547478197860688,2.41756272401434,7,7
+E-GEOD-5305_g2_g4_Cell surface interactions at the vascular wall,R-MMU-202733,reactome,g2_g4,Cell surface interactions at the vascular wall,E-GEOD-5305,0.0055881524703577,0.0955574072431169,1.47155991896525,46,28
+E-GEOD-5305_g2_g4_Biological oxidations,R-MMU-211859,reactome,g2_g4,Biological oxidations,E-GEOD-5305,0.0055634430499122,0.0955574072431169,1.42463517665131,56,33
+E-GEOD-5305_g2_g4_Regulation of mRNA stability by proteins that bind AU-rich elements,R-MMU-450531,reactome,g2_g4,Regulation of mRNA stability by proteins that bind AU-rich elements,E-GEOD-5305,0.0040254143716201,0.090171821417535,1.64048899129544,28,19
+E-GEOD-5305_g2_g4_Regulation of mitotic cell cycle,R-MMU-453276,reactome,g2_g4,Regulation of mitotic cell cycle,E-GEOD-5305,0.0048624755104999,0.090171821417535,1.56430529200928,34,22
+E-GEOD-5305_g2_g4_Positive epigenetic regulation of rRNA expression,R-MMU-5250913,reactome,g2_g4,Positive epigenetic regulation of rRNA expression,E-GEOD-5305,0.0050547511690099,0.090171821417535,1.7268305171531,21,15
+E-GEOD-5305_g2_g4_B-WICH complex positively regulates rRNA expression,R-MMU-5250924,reactome,g2_g4,B-WICH complex positively regulates rRNA expression,E-GEOD-5305,0.0050547511690099,0.090171821417535,1.7268305171531,21,15
+E-GEOD-5305_g2_g4_Mismatch repair (MMR) directed by MSH2:MSH3 (MutSbeta),R-MMU-5358606,reactome,g2_g4,Mismatch repair (MMR) directed by MSH2:MSH3 (MutSbeta),E-GEOD-5305,0.0020490412083674,0.0547478197860688,2.41756272401434,7,7
+E-GEOD-5305_g2_g4_Mitochondrial translation,R-MMU-5368287,reactome,g2_g4,Mitochondrial translation,E-GEOD-5305,0.0011625061893095,0.0430078740105845,1.61170848267622,39,26
+E-GEOD-5305_g2_g4_Mitochondrial translation elongation,R-MMU-5389840,reactome,g2_g4,Mitochondrial translation elongation,E-GEOD-5305,0.0006342520185336,0.0387346768461604,1.65412186379928,38,26
+E-GEOD-5305_g2_g4_Mitochondrial translation termination,R-MMU-5419276,reactome,g2_g4,Mitochondrial translation termination,E-GEOD-5305,0.0011625061893095,0.0430078740105845,1.61170848267622,39,26
+E-GEOD-5305_g2_g4_PCNA-Dependent Long Patch Base Excision Repair,R-MMU-5651801,reactome,g2_g4,PCNA-Dependent Long Patch Base Excision Repair,E-GEOD-5305,2.42288786182159e-05,0.0064994011148904,2.41756272401434,12,12
+E-GEOD-5305_g2_g4_Gap-filling DNA repair synthesis and ligation in GG-NER,R-MMU-5696397,reactome,g2_g4,Gap-filling DNA repair synthesis and ligation in GG-NER,E-GEOD-5305,0.0003478211778057,0.0247822589186562,2.41756272401434,9,9
+E-GEOD-5305_g2_g4_Nucleotide Excision Repair,R-MMU-5696398,reactome,g2_g4,Nucleotide Excision Repair,E-GEOD-5305,0.0002137302651439,0.0203043751886794,1.69229390681004,40,28
+E-GEOD-5305_g2_g4_Global Genome Nucleotide Excision Repair (GG-NER),R-MMU-5696399,reactome,g2_g4,Global Genome Nucleotide Excision Repair (GG-NER),E-GEOD-5305,0.0025856217300438,0.0666750258296406,1.63770378078391,31,21
+E-GEOD-5305_g2_g4_Dual Incision in GG-NER,R-MMU-5696400,reactome,g2_g4,Dual Incision in GG-NER,E-GEOD-5305,0.0018291404843261,0.052130503803295,1.88032656312226,18,14
+E-GEOD-5305_g2_g4_Respiratory electron transport,R-MMU-611105,reactome,g2_g4,Respiratory electron transport,E-GEOD-5305,0.0003376460033949,0.0247822589186562,1.89200561009818,23,18
+E-GEOD-5305_g2_g4_Transcription-Coupled Nucleotide Excision Repair (TC-NER),R-MMU-6781827,reactome,g2_g4,Transcription-Coupled Nucleotide Excision Repair (TC-NER),E-GEOD-5305,1.64187508124503e-05,0.0064994011148904,1.93405017921147,30,24
+E-GEOD-5305_g2_g4_Dual incision in TC-NER,R-MMU-6782135,reactome,g2_g4,Dual incision in TC-NER,E-GEOD-5305,8.80680882583306e-05,0.0150596430921745,1.93405017921147,25,20
+E-GEOD-5305_g2_g4_Gap-filling DNA repair synthesis and ligation in TC-NER,R-MMU-6782210,reactome,g2_g4,Gap-filling DNA repair synthesis and ligation in TC-NER,E-GEOD-5305,1.39500834924956e-05,0.0064994011148904,2.03075268817204,25,21
+E-GEOD-5305_g2_g4_Complex I biogenesis,R-MMU-6799198,reactome,g2_g4,Complex I biogenesis,E-GEOD-5305,0.0012391725498199,0.0430078740105845,1.84195255162997,21,16
+E-GEOD-5305_g2_g4_Lagging Strand Synthesis,R-MMU-69186,reactome,g2_g4,Lagging Strand Synthesis,E-GEOD-5305,0.0026514045359155,0.0666750258296406,1.93405017921147,15,12
+E-GEOD-5305_g2_g4_DNA strand elongation,R-MMU-69190,reactome,g2_g4,DNA strand elongation,E-GEOD-5305,0.0013268532018713,0.0430078740105845,1.96426971326165,16,13
+E-GEOD-5305_g2_g4_Synthesis of DNA,R-MMU-69239,reactome,g2_g4,Synthesis of DNA,E-GEOD-5305,0.0001518568998868,0.0185482356290384,1.5839204053887,58,38
+E-GEOD-5305_g2_g4_S Phase,R-MMU-69242,reactome,g2_g4,S Phase,E-GEOD-5305,0.0001352420471439,0.0185482356290384,1.50705208769725,77,48
+E-GEOD-5305_g2_g4_DNA Replication,R-MMU-69306,reactome,g2_g4,DNA Replication,E-GEOD-5305,0.0010852947094668,0.0430078740105845,1.48173199213782,62,38
+E-GEOD-5305_g2_g4_Translation,R-MMU-72766,reactome,g2_g4,Translation,E-GEOD-5305,3.04065549234642e-05,0.0064994011148904,1.56814879395525,74,48
+E-GEOD-5305_g2_g4_RNA Polymerase I Transcription Initiation,R-MMU-73762,reactome,g2_g4,RNA Polymerase I Transcription Initiation,E-GEOD-5305,0.0013268532018713,0.0430078740105845,1.96426971326165,16,13
+E-GEOD-5305_g2_g4_RNA Polymerase I Promoter Escape,R-MMU-73772,reactome,g2_g4,RNA Polymerase I Promoter Escape,E-GEOD-5305,0.0012391725498199,0.0430078740105845,1.84195255162997,21,16
+E-GEOD-5305_g2_g4_RNA Polymerase I Transcription Termination,R-MMU-73863,reactome,g2_g4,RNA Polymerase I Transcription Termination,E-GEOD-5305,0.0008508871303471,0.0430078740105845,2.07219662058372,14,12
+E-GEOD-5305_g2_g4_Base Excision Repair,R-MMU-73884,reactome,g2_g4,Base Excision Repair,E-GEOD-5305,0.0015376634031447,0.0469536503460268,1.78689418731494,23,17
+E-GEOD-5305_g2_g4_DNA Damage Bypass,R-MMU-73893,reactome,g2_g4,DNA Damage Bypass,E-GEOD-5305,0.0043162680372429,0.090171821417535,1.78136200716846,19,14
+E-GEOD-5305_g2_g4_DNA Repair,R-MMU-73894,reactome,g2_g4,DNA Repair,E-GEOD-5305,0.0027361408338463,0.0668400117982476,1.34874551971326,95,53
+E-GEOD-5305_g2_g4_Resolution of Abasic Sites (AP sites),R-MMU-73933,reactome,g2_g4,Resolution of Abasic Sites (AP sites),E-GEOD-5305,0.0018291404843261,0.052130503803295,1.88032656312226,18,14
+E-GEOD-5305_g1_g3_Amplification of signal from the kinetochores,R-MMU-141424,reactome,g1_g3,Amplification of signal from the kinetochores,E-GEOD-5305,1.89725610217202e-05,0.0032443079347141,1.79558388345094,46,32
+E-GEOD-5305_g1_g3_Amplification  of signal from unattached  kinetochores via a MAD2  inhibitory signal,R-MMU-141444,reactome,g1_g3,Amplification  of signal from unattached  kinetochores via a MAD2  inhibitory signal,E-GEOD-5305,1.89725610217202e-05,0.0032443079347141,1.79558388345094,46,32
+E-GEOD-5305_g1_g3_Collagen degradation,R-MMU-1442490,reactome,g1_g3,Collagen degradation,E-GEOD-5305,0.0026004803134831,0.0966700290446984,1.79558388345094,23,16
+E-GEOD-5305_g1_g3_Collagen formation,R-MMU-1474290,reactome,g1_g3,Collagen formation,E-GEOD-5305,5.78465333220629e-06,0.0024729392995181,2.01652486910995,32,25
+E-GEOD-5305_g1_g3_Collagen biosynthesis and modifying enzymes,R-MMU-1650814,reactome,g1_g3,Collagen biosynthesis and modifying enzymes,E-GEOD-5305,2.84893128846672e-05,0.00347976607377,2.06492146596859,25,20
+E-GEOD-5305_g1_g3_Cholesterol biosynthesis,R-MMU-191273,reactome,g1_g3,Cholesterol biosynthesis,E-GEOD-5305,1.49129471770579e-05,0.0032443079347141,2.29435718440954,18,16
+E-GEOD-5305_g1_g3_Assembly of collagen fibrils and other multimeric structures,R-MMU-2022090,reactome,g1_g3,Assembly of collagen fibrils and other multimeric structures,E-GEOD-5305,2.84893128846672e-05,0.00347976607377,2.06492146596859,25,20
+E-GEOD-5305_g1_g3_Separation of Sister Chromatids,R-MMU-2467813,reactome,g1_g3,Separation of Sister Chromatids,E-GEOD-5305,0.0015679718624838,0.0705587338117742,1.44544502617801,75,42
+E-GEOD-5305_g1_g3_Resolution of Sister Chromatid Cohesion,R-MMU-2500257,reactome,g1_g3,Resolution of Sister Chromatid Cohesion,E-GEOD-5305,0.0001397872609789,0.0108652825579127,1.63020115734362,57,36
+E-GEOD-5305_g1_g3_Mitotic Metaphase and Anaphase,R-MMU-2555396,reactome,g1_g3,Mitotic Metaphase and Anaphase,E-GEOD-5305,0.0014167602280697,0.0705587338117742,1.43760355225661,79,44
+E-GEOD-5305_g1_g3_Striated Muscle Contraction,R-MMU-390522,reactome,g1_g3,Striated Muscle Contraction,E-GEOD-5305,0.0006310469380693,0.0385389380035219,1.90780787616663,23,17
+E-GEOD-5305_g1_g3_Mitotic G1 phase and G1/S transition,R-MMU-453279,reactome,g1_g3,Mitotic G1 phase and G1/S transition,E-GEOD-5305,0.0022704691548672,0.088238687609612,1.48744342887568,59,34
+E-GEOD-5305_g1_g3_RHO GTPases Activate Formins,R-MMU-5663220,reactome,g1_g3,RHO GTPases Activate Formins,E-GEOD-5305,1.27454072231472e-06,0.001089732317579,1.79368178187949,59,41
+E-GEOD-5305_g1_g3_Mitotic Prometaphase,R-MMU-68877,reactome,g1_g3,Mitotic Prometaphase,E-GEOD-5305,0.0018878450307645,0.0768622619668436,1.41648576171626,82,45
+E-GEOD-5305_g1_g3_Mitotic Anaphase,R-MMU-68882,reactome,g1_g3,Mitotic Anaphase,E-GEOD-5305,0.0014167602280697,0.0705587338117742,1.43760355225661,79,44
+E-GEOD-5305_g1_g3_Activation of the pre-replicative complex,R-MMU-68962,reactome,g1_g3,Activation of the pre-replicative complex,E-GEOD-5305,0.0010483611088171,0.0597565832025746,1.93586387434555,20,15
+E-GEOD-5305_g1_g3_G1/S Transition,R-MMU-69206,reactome,g1_g3,G1/S Transition,E-GEOD-5305,0.0016670782095574,0.0712675934585801,1.53876359242851,52,31
+E-GEOD-5305_g1_g3_DNA Replication,R-MMU-69306,reactome,g1_g3,DNA Replication,E-GEOD-5305,0.0015677037435602,0.0705587338117742,1.5210359012715,56,33
+E-GEOD-5305_g1_g3_Mitotic Spindle Checkpoint,R-MMU-69618,reactome,g1_g3,Mitotic Spindle Checkpoint,E-GEOD-5305,4.23331721042328e-05,0.0040216513499021,1.72076788830716,51,34
+E-GEOD-5305_g1_g3_Chromosome Maintenance,R-MMU-73886,reactome,g1_g3,Chromosome Maintenance,E-GEOD-5305,0.0005610021602733,0.0385389380035219,1.74607329842932,34,23
+E-GEOD-5305_g1_g3_Collagen chain trimerization,R-MMU-8948216,reactome,g1_g3,Collagen chain trimerization,E-GEOD-5305,0.0006305987058518,0.0385389380035219,2.09718586387435,16,13
+E-GEOD-5305_g1_g3_Metabolism of steroids,R-MMU-8957322,reactome,g1_g3,Metabolism of steroids,E-GEOD-5305,4.82703392164741e-05,0.0041271140030085,1.83397630201157,38,27
+E-GEOD-5305_g1_g3_EML4 and NUDC in mitotic spindle formation,R-MMU-9648025,reactome,g1_g3,EML4 and NUDC in mitotic spindle formation,E-GEOD-5305,3.76665048800741e-05,0.0040216513499021,1.75737997103709,47,32
+E-GEOD-5305_g1_g3_EGF-type aspartate/asparagine hydroxylation site,IPR000152,interpro,g1_g3,EGF-type aspartate/asparagine hydroxylation site,E-GEOD-5305,1.67239360425235e-05,0.0037405870281777,1.97789121825382,34,25
+E-GEOD-5305_g1_g3_Thyroglobulin type-1,IPR000716,interpro,g1_g3,Thyroglobulin type-1,E-GEOD-5305,0.0008914673802708,0.0747718265202209,2.42093885114268,10,9
+E-GEOD-5305_g1_g3_EGF-like calcium-binding domain,IPR001881,interpro,g1_g3,EGF-like calcium-binding domain,E-GEOD-5305,0.0001612437975187,0.0180324313558424,1.81752166001703,37,25
+E-GEOD-5305_g1_g3_Kazal domain,IPR002350,interpro,g1_g3,Kazal domain,E-GEOD-5305,0.0001454529141803,0.0180324313558424,2.46577105208977,12,11
+E-GEOD-5305_g1_g3_Growth factor receptor cysteine-rich domain superfamily,IPR009030,interpro,g1_g3,Growth factor receptor cysteine-rich domain superfamily,E-GEOD-5305,1.36410995635496e-06,0.0006374558692303,1.98542604194241,42,31
+"E-GEOD-5305_g1_g3_EGF-like calcium-binding, conserved site",IPR018097,interpro,g1_g3,"EGF-like calcium-binding, conserved site",E-GEOD-5305,1.90001749398019e-06,0.0006374558692303,2.15194564546016,30,24
+E-GEOD-5305_g1_g3_Kazal domain superfamily,IPR036058,interpro,g1_g3,Kazal domain superfamily,E-GEOD-5305,0.0001454529141803,0.0180324313558424,2.46577105208977,12,11
+E-GEOD-5305_g1_g3_Thyroglobulin type-1 superfamily,IPR036857,interpro,g1_g3,Thyroglobulin type-1 superfamily,E-GEOD-5305,0.0008914673802708,0.0747718265202209,2.42093885114268,10,9
+"E-GEOD-5305_g2_g4_Insulin-like growth factor-binding protein, IGFBP",IPR000867,interpro,g2_g4,"Insulin-like growth factor-binding protein, IGFBP",E-GEOD-5305,0.0001112821468449,0.0826826351058344,2.34704453441296,13,12

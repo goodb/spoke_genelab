@@ -232,6 +232,208 @@ This database dump will be used to create the SPOKE-GeneLab composite database.
 
 ------
 
+## 🧬 Gene Expression Atlas (GEA) Import & RDF Export
+
+In addition to the OSDR pipeline, this repository includes a **command-line pipeline** for importing local [Gene Expression Atlas (GEA)](https://www.ebi.ac.uk/gxa/) experiment data and exporting to **RDF (Turtle format)** following the [Biolink Model](https://biolink.github.io/biolink-model/).
+
+### Supported GEA Data
+
+The GEA pipeline processes experiment directories containing:
+- **IDF files** (`.idf.txt`) - Experiment metadata
+- **SDRF files** (`.condensed-sdrf.tsv`) - Sample metadata with ontology URIs
+- **Configuration XML** (`-configuration.xml`) - Assay groups and contrasts
+- **Analytics TSV** (`-analytics.tsv`) - Differential expression results
+- **GSEA files** (`.gsea.tsv`) - Gene set enrichment analysis for GO, Reactome, InterPro
+
+### Installation
+
+```bash
+# Install additional dependencies
+pip install rdflib pytest
+```
+
+### CLI Usage
+
+```bash
+# Process a GEA experiment directory and output Neo4j CSV files
+python -m scripts.main --source gea --input-dir ./E-GEOD-5305-gea --csv
+
+# Process and generate RDF Turtle output
+python -m scripts.main --source gea --input-dir ./E-GEOD-5305-gea --rdf
+
+# Both CSV and RDF output
+python -m scripts.main --source gea --input-dir ./E-GEOD-5305-gea --csv --rdf
+
+# Custom p-value threshold
+python -m scripts.main --source gea --input-dir ./E-GEOD-5305-gea --rdf --p-value 0.05
+
+# Skip GSEA extraction (faster processing)
+python -m scripts.main --source gea --input-dir ./E-GEOD-5305-gea --rdf --no-gsea
+```
+
+### Output Structure
+
+```
+output/
+├── nodes/                    # Neo4j node CSV files
+│   ├── Study_*.csv
+│   ├── Assay_*.csv
+│   ├── MGene_*.csv
+│   ├── PathwayEnrichment_*.csv
+│   ├── GOTerm_*.csv
+│   ├── ReactomePathway_*.csv
+│   └── InterProDomain_*.csv
+├── relationships/            # Neo4j relationship CSV files
+│   ├── Study-PERFORMED_SpAS-Assay_*.csv
+│   ├── Assay-MEASURED_DIFFERENTIAL_EXPRESSION_ASmMG-MGene_*.csv
+│   └── ...
+└── rdf/
+    └── gxa_rdf.ttl           # RDF Turtle file (Biolink compliant)
+```
+
+### RDF Biolink Model Mapping
+
+The RDF output follows the [Biolink Model](https://biolink.github.io/biolink-model/) ontology:
+
+| Graph Node | Biolink Class | URI Pattern |
+|------------|---------------|-------------|
+| Study | `biolink:Study` | `spokegenelab:Study/{id}` |
+| Assay | `biolink:Assay` | `spokegenelab:Assay/{id}` |
+| MGene | `biolink:Gene` | `ncbigene:{ensembl_id}` |
+| Gene | `biolink:Gene` | `ncbigene:{entrez_id}` |
+| PathwayEnrichment | `biolink:Association` | `spokegenelab:Enrichment/{id}` |
+| GOTerm | `biolink:BiologicalProcess` | `go:{GO_id}` |
+| ReactomePathway | `biolink:Pathway` | `reactome:{id}` |
+
+Differential expression relationships are **reified** as Biolink Associations with properties:
+- `spokegenelab:log2fc` - Log2 fold change
+- `spokegenelab:adj_p_value` - Adjusted p-value
+
+### Querying RDF with SPARQL
+
+The RDF output can be loaded into any SPARQL-compatible triple store or queried directly with Python:
+
+```python
+from rdflib import Graph
+
+# Load the RDF graph
+g = Graph()
+g.parse("output/rdf/gxa_rdf.ttl", format="turtle")
+
+# Query for upregulated genes
+query = """
+PREFIX biolink: <https://w3id.org/biolink/vocab/>
+PREFIX spokegenelab: <https://spoke.ucsf.edu/genelab/>
+
+SELECT ?gene ?log2fc WHERE {
+    ?assoc biolink:subject ?assay .
+    ?assoc biolink:object ?gene .
+    ?assoc spokegenelab:log2fc ?log2fc .
+    FILTER(?log2fc > 1.0)
+}
+ORDER BY DESC(?log2fc)
+LIMIT 20
+"""
+results = g.query(query)
+for row in results:
+    print(f"Gene: {row.gene}, Log2FC: {row.log2fc}")
+```
+
+#### Example SPARQL Queries
+
+**Find all upregulated genes (log2fc > 0):**
+```sparql
+PREFIX biolink: <https://w3id.org/biolink/vocab/>
+PREFIX spokegenelab: <https://spoke.ucsf.edu/genelab/>
+
+SELECT ?gene ?log2fc ?pvalue WHERE {
+    ?assoc biolink:object ?gene .
+    ?assoc spokegenelab:log2fc ?log2fc .
+    ?assoc spokegenelab:adj_p_value ?pvalue .
+    FILTER(?log2fc > 0)
+}
+ORDER BY DESC(?log2fc)
+```
+
+**Find downregulated genes (log2fc < 0):**
+```sparql
+PREFIX biolink: <https://w3id.org/biolink/vocab/>
+PREFIX spokegenelab: <https://spoke.ucsf.edu/genelab/>
+
+SELECT ?gene ?log2fc WHERE {
+    ?assoc biolink:object ?gene .
+    ?assoc spokegenelab:log2fc ?log2fc .
+    FILTER(?log2fc < -1.0)
+}
+ORDER BY ?log2fc
+```
+
+**Find genes for a specific assay/contrast:**
+```sparql
+PREFIX biolink: <https://w3id.org/biolink/vocab/>
+PREFIX spokegenelab: <https://spoke.ucsf.edu/genelab/>
+
+SELECT ?gene ?log2fc WHERE {
+    ?assoc biolink:subject ?assay .
+    ?assoc biolink:object ?gene .
+    ?assoc spokegenelab:log2fc ?log2fc .
+    FILTER(CONTAINS(STR(?assay), "g1_g3"))
+}
+```
+
+**List enriched GO terms:**
+```sparql
+PREFIX biolink: <https://w3id.org/biolink/vocab/>
+PREFIX spokegenelab: <https://spoke.ucsf.edu/genelab/>
+
+SELECT ?term ?name ?pvalue WHERE {
+    ?enrichment a biolink:Association .
+    ?enrichment biolink:name ?name .
+    ?enrichment spokegenelab:adj_p_value ?pvalue .
+    ?enrichment biolink:object ?term .
+    FILTER(CONTAINS(STR(?term), "GO_"))
+}
+ORDER BY ?pvalue
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+python -m pytest tests/ -v
+
+# Run only GEA parser tests
+python -m pytest tests/test_gea_parser.py -v
+
+# Run RDF integration tests
+python -m pytest tests/test_rdf_integration.py -v
+```
+
+### Scripts Directory Structure
+
+```
+scripts/
+├── __init__.py
+├── main.py                    # CLI entry point
+├── common/
+│   ├── config.py             # Configuration management
+│   ├── graph_builder.py      # Node/relationship utilities
+│   └── csv_writer.py         # Neo4j CSV output
+├── gea/
+│   ├── gea_parser.py         # GEA file parsing
+│   ├── gea_study_extractor.py
+│   ├── gea_gene_extractor.py
+│   ├── gea_assay_extractor.py
+│   ├── gea_gsea_extractor.py # Pathway enrichment
+│   └── gea_pipeline.py       # GEA orchestrator
+└── rdf/
+    ├── rdf_config.py         # Namespace definitions
+    ├── biolink_mapper.py     # Biolink Model mappings
+    └── turtle_writer.py      # RDF Turtle generation
+```
+
+------
+
 ## 📚 Citation
 
 PW Rose, CA Nelson, SG Gebre, AM Saravia-Butler, K Soman, KA Grigorev, LM Sanders, SV Costes, SE Baranzini, NASA SPOKE-GeneLab Knowledge Graph. Available online: https://github.com/BaranziniLab/spoke_genelab (2025)

@@ -1,0 +1,53 @@
+Investigation Title	Transcription profiling of p68/72 deficient C2C12 cells cultured in either growth medium or differentiation medium to investigate the function of p68/p72 in muscle gene expression and skeletal C2C12 cell differentiation.								
+Comment[AEExperimentDisplayName]	Transcription profiling of p68/72 deficient C2C12 cells to investigate the function of p68/p72 in muscle gene expression and skeletal C2C12 cell differentiation.								
+Comment[Submitted Name]	p68 SMC differentiation								
+Experimental Design	development_or_differentiation_design	individual_genetic_characteristics_design	co-expression_design	transcription profiling by array					
+Experimental Design Term Source REF	mo:1.3.1.1		mo	EFO					
+Comment[ArrayExpressReleaseDate]	2007-11-29								
+Comment[SecondaryAccession]	GSE5305								
+Comment[AEMIAMESCORE]	5								
+Comment[SecondaryAccession]	GDS2152								
+Comment[SecondaryAccession]	GDS2151								
+Comment[ArrayExpressAccession]	E-GEOD-5305								
+Comment[MAGETAB TimeStamp_Version]	2011-01-22 21:23:57 Last Changed Rev: 14857								
+Experimental Factor Name	RNA interference	developmental stage							
+Experimental Factor Type	RNA interference	developmental stage							
+Experimental Factor Term Source REF									
+Person Last Name	Hoffman								
+Person First Name	Eric								
+Person Mid Initials									
+Person Email	ehoffman@cnmcresearch.org								
+Person Phone									
+Person Fax									
+Person Address	Research Center for Genetic Medicine,Children's Research Institute,Children's National Medical Center,111 Michigan Ave. 5th Floor,Washington,20010,USA								
+Person Affiliation	Children's National Medical Center								
+Person Roles	submitter								
+Person Roles Term Source REF									
+Quality Control Type									
+Quality Control Term Source REF									
+Replicate Type									
+Replicate Term Source REF									
+Normalization Type									
+Normalization Term Source REF									
+Date of Experiment									
+Public Release Date	2007-11-29								
+PubMed ID									
+Publication DOI									
+Publication Author List									
+Publication Title									
+Publication Status									
+Publication Status Term Source REF									
+Experiment Description	This project investigates the function of p68/p72 in muscle gene expression and skeletal C2C12 cell differentiation. p68/p72 in C2C12 cells cultured in either growth medium (GM) or differentiation medium (DM) was knocked down using shRNA p68/p72 retrovirus, and globle gene expression was profiled using Affymetrix MOE 430A and 430B GeneChip. Experiment Overall Design: The specific aim is to study muscle gene expression changes and skeletal muscle differenciation using RNA interference of p68/p72 in C2C12 cells.								
+Protocol Name	Affymetrix:Protocol:Hybridization-Unknown	P-AFFY-6							
+Protocol Type	hybridization	feature_extraction							
+Protocol Description	Title: Affymetrix Generic Hybridization. Description: 	Title: Affymetrix CEL analysis. Description: 							
+Protocol Parameters									
+Protocol Hardware									
+Protocol Software	MicroArraySuite 5.0	MicroArraySuite 5.0							
+Protocol Contact									
+Protocol Term Source REF	mo								
+SDRF File	E-GEOD-5305.sdrf.txt								
+Term Source Name	NCI_thesaurus	ncbitax		The MGED Ontology	ArrayExpress	nci_thesaurus	mo:1.3.1.1	mo	EFO
+Term Source File	ncithesaurus.obo.alt	http://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html		http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ebi.ac.uk/arrayexpress	http://nciterms.nci.nih.gov/NCIBrowser/Dictionary.do	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ebi.ac.uk/efo/
+Term Source Version							1.3.1.1		
+Comment[AEExperimentType]	transcription profiling by array								

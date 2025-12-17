@@ -1,0 +1,156 @@
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-1MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-1MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-1MA	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-1MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-1MA	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-1MA	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-1MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-1MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-1MB	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-1MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-1MB	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-1MB	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-2MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-2MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-2MA	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-2MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-2MA	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-2MA	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-2MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-2MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-2MB	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-2MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-2MB	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-2MB	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-3MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-3MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-3MA	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-3MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-3MA	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR-3MA	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-3MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-3MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-3MB	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-3MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-3MB	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR-3MB	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-1MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-1MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-1MA	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-1MA	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-1MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-1MA	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-1MA	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-1MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-1MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-1MB	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-1MB	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-1MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-1MB	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-1MB	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-2MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-2MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-2MA	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-2MA	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-2MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-2MA	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-2MA	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-2MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-2MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-2MB	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-2MB	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-2MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-2MB	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-2MB	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-3MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-3MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-3MA	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-3MA	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-3MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-3MA	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-23	VSD-DM_pSuperR_p68-3MA	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-3MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-3MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-3MB	characteristic	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-3MB	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-3MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-3MB	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-24	VSD-DM_pSuperR_p68-3MB	factor	developmental stage	differentiated	http://www.ebi.ac.uk/efo/EFO_0002954
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-1MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-1MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-1MA	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-1MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-1MA	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-1MA	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-1MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-1MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-1MB	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-1MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-1MB	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-1MB	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-2MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-2MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-2MB	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-2MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-2MB	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-2MB	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-3MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-3MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-3MA	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-3MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-3MA	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-3MA	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-3MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-3MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-3MB	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-3MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-3MB	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR-3MB	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-4MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-4MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-4MA	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-4MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-4MA	factor	RNA interference	control
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR-4MA	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-1MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-1MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-1MB	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-1MB	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-1MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-1MB	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-1MB	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-2MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-2MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-2MA	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-2MA	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-2MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-2MA	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-2MA	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-2MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-2MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-2MB	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-2MB	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-2MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-2MB	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-2MB	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-3MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-3MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-3MA	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-3MA	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-3MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-3MA	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-3MA	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-3MB	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-3MB	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-3MB	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-3MB	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-3MB	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-3MB	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-24	VSD-GM_pSuperR_p68-3MB	factor	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-4MA	characteristic	cell line	C2C12	http://www.ebi.ac.uk/efo/EFO_0001098
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-4MA	characteristic	cell type	myoblast	http://purl.obolibrary.org/obo/CL_0000056
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-4MA	characteristic	developmental stage	growing
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-4MA	characteristic	genotype	p68/p72 deficient
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-4MA	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-4MA	factor	RNA interference	shRNA p68/p72 knockdown
+E-GEOD-5305	A-AFFY-23	VSD-GM_pSuperR_p68-4MA	factor	developmental stage	growing

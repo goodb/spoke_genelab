@@ -1,0 +1,169 @@
+"""
+RDF namespace and configuration definitions.
+
+Defines standard namespaces for RDF output following Biolink Model conventions.
+"""
+
+from rdflib import Namespace, URIRef
+from rdflib.namespace import RDF, RDFS, XSD, OWL
+
+# Standard ontology namespaces
+BIOLINK = Namespace("https://w3id.org/biolink/vocab/")
+OBO = Namespace("http://purl.obolibrary.org/obo/")
+
+# Project-specific namespace
+SPOKEGENELAB = Namespace("https://spoke.ucsf.edu/genelab/")
+
+# External identifier namespaces
+NCBIGENE = Namespace("https://www.ncbi.nlm.nih.gov/gene/")
+NCBITAXON = Namespace("http://purl.obolibrary.org/obo/NCBITaxon_")
+ENSEMBL = Namespace("http://identifiers.org/ensembl/")
+UBERON = Namespace("http://purl.obolibrary.org/obo/UBERON_")
+CL = Namespace("http://purl.obolibrary.org/obo/CL_")
+GO = Namespace("http://purl.obolibrary.org/obo/GO_")
+REACTOME = Namespace("https://reactome.org/content/detail/")
+INTERPRO = Namespace("https://www.ebi.ac.uk/interpro/entry/InterPro/")
+
+# Data source namespaces
+OSDR = Namespace("https://osdr.nasa.gov/bio/repo/data/studies/")
+GEA = Namespace("https://www.ebi.ac.uk/gxa/experiments/")
+
+# All namespaces for binding
+NAMESPACES = {
+    "biolink": BIOLINK,
+    "obo": OBO,
+    "spokegenelab": SPOKEGENELAB,
+    "ncbigene": NCBIGENE,
+    "ncbitaxon": NCBITAXON,
+    "ensembl": ENSEMBL,
+    "uberon": UBERON,
+    "cl": CL,
+    "go": GO,
+    "reactome": REACTOME,
+    "interpro": INTERPRO,
+    "osdr": OSDR,
+    "gea": GEA,
+    "rdf": RDF,
+    "rdfs": RDFS,
+    "xsd": XSD,
+    "owl": OWL,
+}
+
+# Property type to XSD datatype mapping
+PROPERTY_XSD_TYPES = {
+    "string": XSD.string,
+    "int": XSD.integer,
+    "integer": XSD.integer,
+    "float": XSD.float,
+    "double": XSD.double,
+    "boolean": XSD.boolean,
+    "date": XSD.date,
+    "datetime": XSD.dateTime,
+    "string[]": XSD.string,  # Lists handled separately
+}
+
+
+def get_xsd_type(type_str: str):
+    """
+    Get XSD datatype for a property type string.
+
+    Args:
+        type_str: Type string (e.g., "string", "int", "float")
+
+    Returns:
+        XSD datatype URIRef
+    """
+    return PROPERTY_XSD_TYPES.get(type_str.lower(), XSD.string)
+
+
+def create_uri(namespace: Namespace, identifier: str) -> URIRef:
+    """
+    Create a URI from a namespace and identifier.
+
+    Args:
+        namespace: RDFLib Namespace
+        identifier: Local identifier
+
+    Returns:
+        URIRef
+    """
+    # Clean identifier for URI
+    clean_id = str(identifier).replace(" ", "_").replace(":", "_")
+    return namespace[clean_id]
+
+
+def get_namespace_for_node_type(node_type: str) -> Namespace:
+    """
+    Get the appropriate namespace for a node type.
+
+    Args:
+        node_type: Node type name
+
+    Returns:
+        Namespace for that node type
+    """
+    namespace_map = {
+        "Study": SPOKEGENELAB,
+        "Mission": SPOKEGENELAB,
+        "Assay": SPOKEGENELAB,
+        "MGene": NCBIGENE,
+        "Gene": NCBIGENE,
+        "Anatomy": UBERON,
+        "CellType": CL,
+        "PathwayEnrichment": SPOKEGENELAB,
+        "GOTerm": GO,
+        "ReactomePathway": REACTOME,
+        "InterProDomain": INTERPRO,
+        "MethylationRegion": SPOKEGENELAB,
+    }
+    return namespace_map.get(node_type, SPOKEGENELAB)
+
+
+def format_identifier_for_namespace(identifier: str, node_type: str) -> str:
+    """
+    Format an identifier appropriately for its namespace.
+
+    For example, GO:0000001 should become just 0000001 for the GO namespace.
+
+    Args:
+        identifier: Raw identifier
+        node_type: Node type
+
+    Returns:
+        Formatted identifier
+    """
+    id_str = str(identifier)
+
+    # Handle prefixed identifiers
+    if node_type == "GOTerm" and id_str.startswith("GO:"):
+        return id_str.replace("GO:", "")
+    if node_type == "Anatomy" and id_str.startswith("UBERON:"):
+        return id_str.replace("UBERON:", "")
+    if node_type == "CellType" and id_str.startswith("CL:"):
+        return id_str.replace("CL:", "")
+
+    # Handle Reactome IDs (R-MMU-12345 format)
+    if node_type == "ReactomePathway":
+        return id_str
+
+    # Handle InterPro IDs (IPR000001 format)
+    if node_type == "InterProDomain":
+        return id_str
+
+    return id_str
+
+
+def create_node_uri(node_type: str, identifier: str) -> URIRef:
+    """
+    Create a URI for a node.
+
+    Args:
+        node_type: Type of node
+        identifier: Node identifier
+
+    Returns:
+        URIRef for the node
+    """
+    namespace = get_namespace_for_node_type(node_type)
+    formatted_id = format_identifier_for_namespace(identifier, node_type)
+    return create_uri(namespace, formatted_id)

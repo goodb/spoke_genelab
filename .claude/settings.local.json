@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(pip install pytest rdflib)",
+      "Bash(if [ -f output/rdf/spoke_genelab.ttl ])",
+      "Bash(then mv output/rdf/spoke_genelab.ttl output/rdf/gxa_rdf.ttl)",
+      "Bash(else echo \"No existing file to rename\")",
+      "Bash(fi)",
+      "Bash(git add:*)"
+    ]
+  }
+}
