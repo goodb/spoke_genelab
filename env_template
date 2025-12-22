@@ -3,6 +3,11 @@
 # Copy this file to .env and set the following variables according to your local installation.
 #
 KG_VERSION=v0.1.0
+#
+# GEA (Gene Expression Atlas) data directory for downloaded experiments
+GEA_DATA_DIR=/path/to/gea/data
+# RDF output directory for generated Turtle files
+RDF_OUTPUT_DIR=/path/to/rdf/output
 # Path to the spoke_genelab repo
 KG_GIT=<absolute path to spoke_genelab repo>
 # Path to the Neo4J instance in Neo4j Desktop

@@ -28,6 +28,8 @@ class Config:
     project_root: Path = field(default_factory=lambda: Path(__file__).parent.parent.parent)
     data_dir: Path = field(default_factory=lambda: Path(DEFAULT_DATA_DIR))
     output_dir: Path = field(default_factory=lambda: Path(DEFAULT_OUTPUT_DIR))
+    gea_data_dir: Path = field(default_factory=lambda: Path("/Users/bgood/Documents/Scripps/gea"))
+    rdf_output_dir: Path = field(default_factory=lambda: Path("/Users/bgood/Documents/Scripps/rdf"))
 
     # Neo4j settings
     neo4j_home: Optional[str] = None
@@ -73,6 +75,10 @@ class Config:
             self.data_dir = Path(self.data_dir)
         if isinstance(self.output_dir, str):
             self.output_dir = Path(self.output_dir)
+        if isinstance(self.gea_data_dir, str):
+            self.gea_data_dir = Path(self.gea_data_dir)
+        if isinstance(self.rdf_output_dir, str):
+            self.rdf_output_dir = Path(self.rdf_output_dir)
 
         # Set up Neo4j paths if not specified
         if self.neo4j_metadata_dir is None:
@@ -153,6 +159,8 @@ def load_config(
         kg_version=os.getenv("KG_VERSION", "v0.2.0"),
         data_dir=Path(os.getenv("DATA_DIR", project_root / "data")),
         output_dir=Path(os.getenv("OUTPUT_DIR", project_root / "output")),
+        gea_data_dir=Path(os.getenv("GEA_DATA_DIR", "/Users/bgood/Documents/Scripps/gea")),
+        rdf_output_dir=Path(os.getenv("RDF_OUTPUT_DIR", "/Users/bgood/Documents/Scripps/rdf")),
         neo4j_home=os.getenv("NEO4J_HOME"),
         neo4j_bin=os.getenv("NEO4J_BIN"),
         neo4j_database=os.getenv("NEO4J_DATABASE", "spoke-genelab"),

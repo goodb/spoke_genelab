@@ -4,6 +4,9 @@ RDF namespace and configuration definitions.
 Defines standard namespaces for RDF output following Biolink Model conventions.
 """
 
+import re
+from urllib.parse import quote
+
 from rdflib import Namespace, URIRef
 from rdflib.namespace import RDF, RDFS, XSD, OWL
 
@@ -76,6 +79,69 @@ def get_xsd_type(type_str: str):
     return PROPERTY_XSD_TYPES.get(type_str.lower(), XSD.string)
 
 
+def sanitize_uri_identifier(identifier: str) -> str:
+    """
+    Sanitize an identifier for use in a URI.
+
+    Removes or encodes characters that are invalid in URIs.
+
+    Args:
+        identifier: Raw identifier string
+
+    Returns:
+        URI-safe identifier string
+    """
+    id_str = str(identifier)
+
+    # Replace common problematic characters with underscores
+    # These are characters that have special meaning or are invalid in URIs
+    replacements = {
+        " ": "_",
+        ":": "_",
+        ">": "_",
+        "<": "_",
+        '"': "_",
+        "'": "_",
+        "|": "_",
+        "\\": "_",
+        "^": "_",
+        "`": "_",
+        "{": "_",
+        "}": "_",
+        "[": "_",
+        "]": "_",
+        "#": "_",
+        "%": "_",
+        "?": "_",
+        "&": "_",
+        "=": "_",
+        "+": "_",
+        "@": "_",
+        "$": "_",
+        ",": "_",
+        ";": "_",
+        "!": "_",
+        "*": "_",
+        "(": "_",
+        ")": "_",
+    }
+
+    for char, replacement in replacements.items():
+        id_str = id_str.replace(char, replacement)
+
+    # Collapse multiple underscores into one
+    id_str = re.sub(r"_+", "_", id_str)
+
+    # Remove leading/trailing underscores
+    id_str = id_str.strip("_")
+
+    # If empty after cleaning, use a placeholder
+    if not id_str:
+        id_str = "unknown"
+
+    return id_str
+
+
 def create_uri(namespace: Namespace, identifier: str) -> URIRef:
     """
     Create a URI from a namespace and identifier.
@@ -87,8 +153,7 @@ def create_uri(namespace: Namespace, identifier: str) -> URIRef:
     Returns:
         URIRef
     """
-    # Clean identifier for URI
-    clean_id = str(identifier).replace(" ", "_").replace(":", "_")
+    clean_id = sanitize_uri_identifier(identifier)
     return namespace[clean_id]
 
 

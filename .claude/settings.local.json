@@ -9,7 +9,11 @@
       "Bash(then mv output/rdf/spoke_genelab.ttl output/rdf/gxa_rdf.ttl)",
       "Bash(else echo \"No existing file to rename\")",
       "Bash(fi)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "WebFetch(domain:ftp.ebi.ac.uk)",
+      "Bash(python -m scripts.gea.gea_downloader:*)",
+      "Bash(cat:*)",
+      "Bash(python:*)"
     ]
   }
 }
