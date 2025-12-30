@@ -554,11 +554,11 @@ SELECT ?study ?studyTitle ?assay ?goTerm ?goName ?pvalue ?effectSize
 WHERE {
     # Find pathway enrichments
     ?enrichment a biolink:Association ;
-                biolink:object ?goTerm ;
+                biolink:participates_in ?goTerm ;
                 spokegenelab:adj_p_value ?pvalue .
 
-    # Get GO term name
-    ?goTerm biolink:name ?goName .
+    # Get GO term name (note: id/name are swapped in current data)
+    ?goTerm biolink:id ?goName .
     FILTER(CONTAINS(LCASE(?goName), "immune response"))
 
     # Link back to assay and study
@@ -577,13 +577,19 @@ ORDER BY ?pvalue
 ```sparql
 PREFIX biolink: <https://w3id.org/biolink/vocab/>
 PREFIX spokegenelab: <https://spoke.ucsf.edu/genelab/>
-PREFIX go: <http://purl.obolibrary.org/obo/GO_>
 
-SELECT ?study ?studyTitle ?assay ?pvalue
+SELECT ?study ?studyTitle ?assay ?pvalue ?goTermName
 WHERE {
-    # GO:0006955 = immune response
-    ?enrichment biolink:object go:0006955 ;
+    # Find enrichment linked to a GO term
+    ?enrichment biolink:participates_in ?goTerm ;
                 spokegenelab:adj_p_value ?pvalue .
+
+    # Note: id/name are swapped in current data
+    # biolink:name contains the GO ID, biolink:id contains the term name
+    ?goTerm biolink:name ?goId .
+    FILTER(?goId = "GO:0006955")  # immune response
+
+    OPTIONAL { ?goTerm biolink:id ?goTermName }
 
     ?assay biolink:has_output ?enrichment .
     ?study biolink:has_output ?assay ;
@@ -602,13 +608,14 @@ PREFIX reactome: <https://reactome.org/content/detail/>
 SELECT ?pathwayId ?pathwayName (COUNT(?enrichment) AS ?numStudies) (MIN(?pvalue) AS ?bestPvalue)
 WHERE {
     ?enrichment a biolink:Association ;
-                biolink:object ?pathway ;
+                biolink:participates_in ?pathway ;
                 spokegenelab:adj_p_value ?pvalue .
 
     # Filter for Reactome pathways
     FILTER(STRSTARTS(STR(?pathway), STR(reactome:)))
 
-    ?pathway biolink:name ?pathwayName .
+    # Note: id/name are swapped in current data
+    ?pathway biolink:id ?pathwayName .
     BIND(REPLACE(STR(?pathway), STR(reactome:), "") AS ?pathwayId)
 }
 GROUP BY ?pathwayId ?pathwayName
@@ -625,12 +632,13 @@ PREFIX spokegenelab: <https://spoke.ucsf.edu/genelab/>
 SELECT ?goTerm ?goName (COUNT(DISTINCT ?study) AS ?numStudies)
        (GROUP_CONCAT(DISTINCT ?studyId; separator=", ") AS ?studies)
 WHERE {
-    ?enrichment biolink:object ?goTerm ;
+    ?enrichment biolink:participates_in ?goTerm ;
                 spokegenelab:adj_p_value ?pvalue .
 
     FILTER(?pvalue < 0.01)
 
-    ?goTerm biolink:name ?goName .
+    # Note: id/name are swapped in current data
+    ?goTerm biolink:id ?goName .
 
     ?assay biolink:has_output ?enrichment .
     ?study biolink:has_output ?assay ;
