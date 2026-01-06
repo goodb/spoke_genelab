@@ -28,6 +28,29 @@ from .gea_assay_extractor import (
     create_study_assay_relationships,
     create_assay_anatomy_relationships,
     create_assay_celltype_relationships,
+    # SDRF characteristic/factor extraction functions
+    extract_sdrf_characteristics,
+    extract_factor_values_per_assay_group,
+    extract_characteristics_per_assay_group,
+    create_disease_nodes,
+    create_sex_nodes,
+    create_developmental_stage_nodes,
+    create_ethnic_group_nodes,
+    create_organism_status_nodes,
+    create_anatomy_nodes_from_sdrf,
+    create_celltype_nodes_from_sdrf,
+    create_study_disease_relationships,
+    create_study_sex_relationships,
+    create_study_developmental_stage_relationships,
+    create_study_ethnic_group_relationships,
+    create_study_organism_status_relationships,
+    # Assay-level characteristic relationships (characteristics vary per assay group)
+    create_assay_celltype_relationships_from_characteristics,
+    create_assay_anatomy_relationships_from_characteristics,
+    # Assay-level factor relationships
+    create_assay_anatomy_relationships_from_sdrf,
+    create_assay_celltype_relationships_from_sdrf,
+    create_assay_disease_relationships,
 )
 from .gea_gsea_extractor import extract_all_gsea_data
 
@@ -80,7 +103,9 @@ def process_gea_experiment(
     experiment_dir: Union[str, Path],
     config: Optional[Config] = None,
     bioportal_apikey: Optional[str] = None,
-    p_value_threshold: float = 0.1,
+    p_value_threshold: float = 0.01,
+    max_genes_per_assay: int = 200,
+    max_terms_per_type: int = 20,
     include_gsea: bool = True,
     include_orthologs: bool = True,
 ) -> GEAPipelineResult:
@@ -91,7 +116,9 @@ def process_gea_experiment(
         experiment_dir: Path to experiment directory
         config: Optional Config object
         bioportal_apikey: BioPortal API key for ontology mapping
-        p_value_threshold: Adjusted p-value threshold for filtering
+        p_value_threshold: Adjusted p-value threshold for filtering (default 0.01)
+        max_genes_per_assay: Max DE genes per assay to include (default 200)
+        max_terms_per_type: Max enriched terms per type per contrast (default 20)
         include_gsea: Whether to include GSEA/pathway enrichment data
         include_orthologs: Whether to map orthologs to human genes
 
@@ -139,18 +166,87 @@ def process_gea_experiment(
     study_assay_rels = create_study_assay_relationships(assay_nodes)
     result.add_relationships("Study-PERFORMED_SpAS-Assay", study_assay_rels)
 
-    # Create Anatomy and CellType nodes and relationships
-    anatomy_nodes = create_anatomy_nodes(assay_nodes)
-    result.add_nodes("Anatomy", anatomy_nodes)
+    # Extract SDRF characteristics and factors
+    print("Extracting SDRF characteristics and factors...")
+    characteristics = extract_sdrf_characteristics(experiment)
+    group_factors = extract_factor_values_per_assay_group(experiment)
+    group_characteristics = extract_characteristics_per_assay_group(experiment)
 
-    celltype_nodes = create_celltype_nodes(assay_nodes)
-    result.add_nodes("CellType", celltype_nodes)
+    # Create characteristic nodes (study-level metadata)
+    disease_nodes = create_disease_nodes(characteristics)
+    result.add_nodes("Disease", disease_nodes)
 
-    assay_anatomy_rels = create_assay_anatomy_relationships(assay_nodes)
-    result.add_relationships("Assay-INVESTIGATED_ASiA-Anatomy", assay_anatomy_rels)
+    sex_nodes = create_sex_nodes(characteristics)
+    result.add_nodes("Sex", sex_nodes)
 
-    assay_celltype_rels = create_assay_celltype_relationships(assay_nodes)
-    result.add_relationships("Assay-INVESTIGATED_ASiCT-CellType", assay_celltype_rels)
+    dev_stage_nodes = create_developmental_stage_nodes(characteristics)
+    result.add_nodes("DevelopmentalStage", dev_stage_nodes)
+
+    ethnic_nodes = create_ethnic_group_nodes(characteristics)
+    result.add_nodes("EthnicGroup", ethnic_nodes)
+
+    organism_status_nodes = create_organism_status_nodes(characteristics)
+    result.add_nodes("OrganismStatus", organism_status_nodes)
+
+    # Create Anatomy and CellType nodes from SDRF (with ontology URIs)
+    anatomy_nodes_sdrf = create_anatomy_nodes_from_sdrf(characteristics)
+    result.add_nodes("Anatomy", anatomy_nodes_sdrf)
+
+    celltype_nodes_sdrf = create_celltype_nodes_from_sdrf(characteristics)
+    result.add_nodes("CellType", celltype_nodes_sdrf)
+
+    # Also create from old method for backwards compatibility if BioPortal was used
+    if bioportal_apikey:
+        anatomy_nodes = create_anatomy_nodes(assay_nodes)
+        result.add_nodes("Anatomy", anatomy_nodes)
+        celltype_nodes = create_celltype_nodes(assay_nodes)
+        result.add_nodes("CellType", celltype_nodes)
+
+    # Create Study-Characteristic relationships
+    study_id = experiment.accession
+    study_disease_rels = create_study_disease_relationships(study_id, characteristics)
+    result.add_relationships("Study-HAS_DISEASE-Disease", study_disease_rels)
+
+    study_sex_rels = create_study_sex_relationships(study_id, characteristics)
+    result.add_relationships("Study-HAS_SEX-Sex", study_sex_rels)
+
+    study_dev_stage_rels = create_study_developmental_stage_relationships(study_id, characteristics)
+    result.add_relationships("Study-HAS_DEVELOPMENTAL_STAGE-DevelopmentalStage", study_dev_stage_rels)
+
+    study_ethnic_rels = create_study_ethnic_group_relationships(study_id, characteristics)
+    result.add_relationships("Study-HAS_ETHNIC_GROUP-EthnicGroup", study_ethnic_rels)
+
+    study_organism_status_rels = create_study_organism_status_relationships(study_id, characteristics)
+    result.add_relationships("Study-HAS_ORGANISM_STATUS-OrganismStatus", study_organism_status_rels)
+
+    # Create Assay-Characteristic relationships (characteristics vary per assay group)
+    # CellType from characteristics
+    assay_celltype_rels_chars = create_assay_celltype_relationships_from_characteristics(assay_nodes, group_characteristics)
+    result.add_relationships("Assay-HAS_ATTRIBUTE-CellType", assay_celltype_rels_chars)
+
+    # Anatomy from characteristics
+    assay_anatomy_rels_chars = create_assay_anatomy_relationships_from_characteristics(assay_nodes, group_characteristics)
+    result.add_relationships("Assay-HAS_ATTRIBUTE-Anatomy", assay_anatomy_rels_chars)
+
+    # Create Assay-Factor relationships (factors also vary between assay groups)
+    # Anatomy from factors (may overlap with characteristics)
+    assay_anatomy_rels_sdrf = create_assay_anatomy_relationships_from_sdrf(assay_nodes, group_factors)
+    result.add_relationships("Assay-HAS_ATTRIBUTE-Anatomy", assay_anatomy_rels_sdrf)
+
+    # CellType from factors (may overlap with characteristics)
+    assay_celltype_rels_sdrf = create_assay_celltype_relationships_from_sdrf(assay_nodes, group_factors)
+    result.add_relationships("Assay-HAS_ATTRIBUTE-CellType", assay_celltype_rels_sdrf)
+
+    # Disease from factors
+    assay_disease_rels = create_assay_disease_relationships(assay_nodes, group_factors)
+    result.add_relationships("Assay-HAS_INPUT-Disease", assay_disease_rels)
+
+    # Also create from old method for backwards compatibility if BioPortal was used
+    if bioportal_apikey:
+        assay_anatomy_rels = create_assay_anatomy_relationships(assay_nodes)
+        result.add_relationships("Assay-INVESTIGATED_ASiA-Anatomy", assay_anatomy_rels)
+        assay_celltype_rels = create_assay_celltype_relationships(assay_nodes)
+        result.add_relationships("Assay-INVESTIGATED_ASiCT-CellType", assay_celltype_rels)
 
     # Extract MGene nodes
     print("Extracting MGene nodes...")
@@ -169,13 +265,13 @@ def process_gea_experiment(
 
     # Extract differential expression relationships
     print("Extracting differential expression data...")
-    de_rels = extract_differential_expression(experiment, p_value_threshold)
+    de_rels = extract_differential_expression(experiment, p_value_threshold, max_genes_per_assay)
     result.add_relationships("Assay-MEASURED_DIFFERENTIAL_EXPRESSION_ASmMG-MGene", de_rels)
 
     # Extract GSEA data
     if include_gsea:
         print("Extracting GSEA/pathway enrichment data...")
-        gsea_data = extract_all_gsea_data(experiment, p_value_threshold)
+        gsea_data = extract_all_gsea_data(experiment, p_value_threshold, max_terms_per_type)
 
         for key, df in gsea_data.items():
             if "-" in key:  # Relationship
@@ -305,7 +401,9 @@ if __name__ == "__main__":
     parser.add_argument("--output-dir", "-o", default="./output", help="Output directory")
     parser.add_argument("--csv", action="store_true", help="Output Neo4j CSV files")
     parser.add_argument("--rdf", action="store_true", help="Output RDF Turtle files")
-    parser.add_argument("--p-value", type=float, default=0.1, help="P-value threshold")
+    parser.add_argument("--p-value", type=float, default=0.01, help="P-value threshold (default: 0.01)")
+    parser.add_argument("--max-genes", type=int, default=200, help="Max DE genes per assay (default: 200)")
+    parser.add_argument("--max-terms", type=int, default=20, help="Max enriched terms per type (default: 20)")
     parser.add_argument("--bioportal-key", help="BioPortal API key")
     parser.add_argument("--no-gsea", action="store_true", help="Skip GSEA extraction")
     parser.add_argument("--no-orthologs", action="store_true", help="Skip ortholog mapping")
@@ -319,6 +417,8 @@ if __name__ == "__main__":
         output_rdf=args.rdf,
         bioportal_apikey=args.bioportal_key,
         p_value_threshold=args.p_value,
+        max_genes_per_assay=args.max_genes,
+        max_terms_per_type=args.max_terms,
         include_gsea=not args.no_gsea,
         include_orthologs=not args.no_orthologs,
     )

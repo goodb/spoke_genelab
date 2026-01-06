@@ -26,6 +26,12 @@ BIOLINK_NODE_CLASSES = {
     "GOTerm": BIOLINK.BiologicalProcess,  # Default, may be overridden
     "ReactomePathway": BIOLINK.Pathway,
     "InterProDomain": BIOLINK.ProteinDomain,
+    # Characteristic/factor node types
+    "Disease": BIOLINK.Disease,
+    "Sex": BIOLINK.BiologicalSex,
+    "DevelopmentalStage": BIOLINK.LifeStage,
+    "EthnicGroup": BIOLINK.PopulationOfIndividualOrganisms,
+    "OrganismStatus": BIOLINK.Attribute,
 }
 
 # GO category to Biolink class mapping
@@ -78,6 +84,22 @@ BIOLINK_PREDICATES = {
     "PathwayEnrichment-ENRICHES_PEeGO-GOTerm": BIOLINK.participates_in,
     "PathwayEnrichment-ENRICHES_PEeRP-ReactomePathway": BIOLINK.participates_in,
     "PathwayEnrichment-ENRICHES_PEeIP-InterProDomain": BIOLINK.participates_in,
+
+    # Study-Characteristic relationships
+    "HAS_DISEASE": BIOLINK.studies,
+    "Study-HAS_DISEASE-Disease": BIOLINK.studies,
+    "HAS_SEX": BIOLINK.has_attribute,
+    "Study-HAS_SEX-Sex": BIOLINK.has_attribute,
+    "HAS_DEVELOPMENTAL_STAGE": BIOLINK.has_attribute,
+    "Study-HAS_DEVELOPMENTAL_STAGE-DevelopmentalStage": BIOLINK.has_attribute,
+    "HAS_ETHNIC_GROUP": BIOLINK.has_attribute,
+    "Study-HAS_ETHNIC_GROUP-EthnicGroup": BIOLINK.has_attribute,
+    "HAS_ORGANISM_STATUS": BIOLINK.has_attribute,
+    "Study-HAS_ORGANISM_STATUS-OrganismStatus": BIOLINK.has_attribute,
+    # Assay-Characteristic relationships (characteristics vary per assay group)
+    "Assay-HAS_ATTRIBUTE-CellType": BIOLINK.has_attribute,
+    "Assay-HAS_ATTRIBUTE-Anatomy": BIOLINK.has_attribute,
+    "Assay-HAS_INPUT-Disease": BIOLINK.has_input,
 }
 
 

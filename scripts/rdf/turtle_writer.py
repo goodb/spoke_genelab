@@ -19,6 +19,7 @@ from .rdf_config import (
     SPOKEGENELAB,
     get_xsd_type,
     create_node_uri,
+    create_uri_from_ontology_uri,
 )
 from .biolink_mapper import (
     get_biolink_class,
@@ -65,14 +66,18 @@ class TurtleWriter:
 
         Args:
             node_type: Type of node (e.g., "Study", "Gene")
-            identifier: Node identifier
+            identifier: Node identifier (can be a full ontology URI)
             properties: Dictionary of property name -> value
 
         Returns:
             URIRef of the created node
         """
-        # Create node URI
-        node_uri = create_node_uri(node_type, identifier)
+        # Check if identifier is already a full URI (e.g., ontology URI)
+        if identifier.startswith("http://") or identifier.startswith("https://"):
+            node_uri = create_uri_from_ontology_uri(identifier)
+        else:
+            # Create node URI using namespace
+            node_uri = create_node_uri(node_type, identifier)
 
         # Add type triple
         biolink_class = get_biolink_class(
@@ -138,16 +143,26 @@ class TurtleWriter:
         Args:
             rel_type: Relationship type
             from_type: Source node type
-            from_id: Source node identifier
+            from_id: Source node identifier (can be a full URI)
             to_type: Target node type
-            to_id: Target node identifier
+            to_id: Target node identifier (can be a full URI)
             properties: Optional relationship properties
 
         Returns:
             URIRef of association node if reified, None otherwise
         """
-        from_uri = create_node_uri(from_type, from_id)
-        to_uri = create_node_uri(to_type, to_id)
+        # Handle full URIs for from_id
+        if from_id.startswith("http://") or from_id.startswith("https://"):
+            from_uri = create_uri_from_ontology_uri(from_id)
+        else:
+            from_uri = create_node_uri(from_type, from_id)
+
+        # Handle full URIs for to_id
+        if to_id.startswith("http://") or to_id.startswith("https://"):
+            to_uri = create_uri_from_ontology_uri(to_id)
+        else:
+            to_uri = create_node_uri(to_type, to_id)
+
         predicate = get_biolink_predicate(rel_type)
 
         # Check if we need to reify this relationship
@@ -293,8 +308,18 @@ class TurtleWriter:
 
         This method ensures proper handling of DE relationships with log2fc/p-value.
         """
-        from_uri = create_node_uri(from_type, from_id)
-        to_uri = create_node_uri(to_type, to_id)
+        # Handle full URIs for from_id
+        if from_id.startswith("http://") or from_id.startswith("https://"):
+            from_uri = create_uri_from_ontology_uri(from_id)
+        else:
+            from_uri = create_node_uri(from_type, from_id)
+
+        # Handle full URIs for to_id
+        if to_id.startswith("http://") or to_id.startswith("https://"):
+            to_uri = create_uri_from_ontology_uri(to_id)
+        else:
+            to_uri = create_node_uri(to_type, to_id)
+
         predicate = get_biolink_predicate(rel_type)
 
         # Generate unique association ID

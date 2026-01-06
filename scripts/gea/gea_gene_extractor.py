@@ -186,14 +186,16 @@ def create_gene_and_ortholog_data(
 
 def extract_differential_expression(
     experiment: GEAExperiment,
-    p_value_threshold: float = 0.1,
+    p_value_threshold: float = 0.01,
+    max_genes_per_assay: int = 200,
 ) -> pd.DataFrame:
     """
     Extract differential expression data for creating Assay-MGene relationships.
 
     Args:
         experiment: Parsed GEAExperiment object
-        p_value_threshold: Adjusted p-value threshold for significance
+        p_value_threshold: Adjusted p-value threshold for significance (default 0.01)
+        max_genes_per_assay: Maximum number of DE genes to include per assay (default 200)
 
     Returns:
         DataFrame with columns: assay_id, gene_id, log2fc, p_value
@@ -227,6 +229,9 @@ def extract_differential_expression(
 
             if de_data.empty:
                 continue
+
+            # Sort by p-value and limit to top N genes
+            de_data = de_data.sort_values("p_value").head(max_genes_per_assay)
 
             # Create assay ID from experiment accession and contrast
             assay_id = f"{experiment.accession}-{contrast_id}"

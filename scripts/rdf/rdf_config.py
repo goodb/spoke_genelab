@@ -27,6 +27,12 @@ GO = Namespace("http://purl.obolibrary.org/obo/GO_")
 REACTOME = Namespace("https://reactome.org/content/detail/")
 INTERPRO = Namespace("https://www.ebi.ac.uk/interpro/entry/InterPro/")
 
+# Ontology namespaces for characteristics/factors
+MONDO = Namespace("http://purl.obolibrary.org/obo/MONDO_")
+PATO = Namespace("http://purl.obolibrary.org/obo/PATO_")
+HANCESTRO = Namespace("http://purl.obolibrary.org/obo/HANCESTRO_")
+EFO = Namespace("http://www.ebi.ac.uk/efo/EFO_")
+
 # Data source namespaces
 OSDR = Namespace("https://osdr.nasa.gov/bio/repo/data/studies/")
 GEA = Namespace("https://www.ebi.ac.uk/gxa/experiments/")
@@ -44,6 +50,10 @@ NAMESPACES = {
     "go": GO,
     "reactome": REACTOME,
     "interpro": INTERPRO,
+    "mondo": MONDO,
+    "pato": PATO,
+    "hancestro": HANCESTRO,
+    "efo": EFO,
     "osdr": OSDR,
     "gea": GEA,
     "rdf": RDF,
@@ -180,8 +190,65 @@ def get_namespace_for_node_type(node_type: str) -> Namespace:
         "ReactomePathway": REACTOME,
         "InterProDomain": INTERPRO,
         "MethylationRegion": SPOKEGENELAB,
+        # Characteristic/factor node types - use OBO namespace as base
+        "Disease": MONDO,
+        "Sex": PATO,
+        "DevelopmentalStage": EFO,
+        "EthnicGroup": HANCESTRO,
+        "OrganismStatus": PATO,
     }
     return namespace_map.get(node_type, SPOKEGENELAB)
+
+
+# Mapping of URI prefixes to namespace objects
+URI_PREFIX_TO_NAMESPACE = {
+    "http://purl.obolibrary.org/obo/MONDO_": MONDO,
+    "http://purl.obolibrary.org/obo/PATO_": PATO,
+    "http://purl.obolibrary.org/obo/HANCESTRO_": HANCESTRO,
+    "http://www.ebi.ac.uk/efo/EFO_": EFO,
+    "http://purl.obolibrary.org/obo/UBERON_": UBERON,
+    "http://purl.obolibrary.org/obo/CL_": CL,
+    "http://purl.obolibrary.org/obo/NCBITaxon_": NCBITAXON,
+    "http://purl.obolibrary.org/obo/GO_": GO,
+}
+
+
+def parse_ontology_uri(uri: str) -> tuple:
+    """
+    Parse an ontology URI to extract the namespace prefix and local ID.
+
+    Args:
+        uri: Full ontology URI (e.g., 'http://purl.obolibrary.org/obo/MONDO_0004975')
+
+    Returns:
+        Tuple of (prefix, local_id) e.g., ('MONDO', '0004975')
+        Returns (None, None) if URI format not recognized
+    """
+    if not uri:
+        return None, None
+
+    # Try to match known prefixes
+    for prefix_uri, namespace in URI_PREFIX_TO_NAMESPACE.items():
+        if uri.startswith(prefix_uri):
+            local_id = uri[len(prefix_uri):]
+            # Extract prefix name from URI (e.g., 'MONDO' from 'http://.../MONDO_')
+            prefix = prefix_uri.rstrip("_").split("/")[-1].split("_")[0]
+            return prefix, local_id
+
+    return None, None
+
+
+def create_uri_from_ontology_uri(ontology_uri: str) -> URIRef:
+    """
+    Create an RDFLib URIRef directly from an ontology URI.
+
+    Args:
+        ontology_uri: Full ontology URI string
+
+    Returns:
+        URIRef of the ontology term
+    """
+    return URIRef(ontology_uri)
 
 
 def format_identifier_for_namespace(identifier: str, node_type: str) -> str:

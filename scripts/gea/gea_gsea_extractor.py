@@ -21,14 +21,16 @@ from .gea_parser import (
 
 def extract_gsea_results(
     experiment: GEAExperiment,
-    p_value_threshold: float = 0.05,
+    p_value_threshold: float = 0.01,
+    max_terms_per_type: int = 20,
 ) -> pd.DataFrame:
     """
     Extract all GSEA enrichment results from a GEA experiment.
 
     Args:
         experiment: Parsed GEAExperiment object
-        p_value_threshold: Adjusted p-value threshold for significance
+        p_value_threshold: Adjusted p-value threshold for significance (default 0.01)
+        max_terms_per_type: Maximum number of enriched terms per enrichment type per contrast (default 20)
 
     Returns:
         DataFrame with GSEA results including enrichment type and contrast
@@ -55,6 +57,8 @@ def extract_gsea_results(
             # Filter by p-value threshold
             if "adj_p_value" in df.columns:
                 df = df[df["adj_p_value"] <= p_value_threshold]
+                # Sort by p-value and limit to top N terms
+                df = df.sort_values("adj_p_value").head(max_terms_per_type)
 
             if not df.empty:
                 all_results.append(df)
@@ -356,20 +360,22 @@ def get_upregulated_genes_by_pathway(
 
 def extract_all_gsea_data(
     experiment: GEAExperiment,
-    p_value_threshold: float = 0.05,
+    p_value_threshold: float = 0.01,
+    max_terms_per_type: int = 20,
 ) -> Dict[str, pd.DataFrame]:
     """
     Extract all GSEA-related nodes and relationships from an experiment.
 
     Args:
         experiment: Parsed GEAExperiment object
-        p_value_threshold: Adjusted p-value threshold
+        p_value_threshold: Adjusted p-value threshold (default 0.01)
+        max_terms_per_type: Maximum enriched terms per type per contrast (default 20)
 
     Returns:
         Dictionary with all nodes and relationships DataFrames
     """
     # Extract GSEA results
-    gsea_results = extract_gsea_results(experiment, p_value_threshold)
+    gsea_results = extract_gsea_results(experiment, p_value_threshold, max_terms_per_type)
 
     if gsea_results.empty:
         return {
