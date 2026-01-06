@@ -590,5 +590,194 @@ class TestCharacteristicsAndFactors:
             print(f"  {row.assay} -> {row.celltype}")
 
 
+class TestMultiURIParsing:
+    """Test handling of multiple URIs in single SDRF fields."""
+
+    def test_create_characteristic_nodes_with_multi_uri(self):
+        """Test that multiple URIs in one field create separate nodes."""
+        from scripts.gea.gea_assay_extractor import create_characteristic_nodes
+
+        # Simulate SDRF data with multiple URIs in one field (real bug case)
+        characteristics = {
+            "organism part": [
+                {
+                    "value": "hippocampus entorhinal cortex",
+                    "uri": "http://purl.obolibrary.org/obo/UBERON_0001388 http://purl.obolibrary.org/obo/UBERON_0001389",
+                },
+                {
+                    "value": "cerebellum",
+                    "uri": "http://purl.obolibrary.org/obo/UBERON_0002037",
+                },
+            ]
+        }
+
+        nodes_df = create_characteristic_nodes(characteristics, "Anatomy", "organism part")
+
+        assert nodes_df is not None, "Should create nodes DataFrame"
+        assert len(nodes_df) == 3, f"Should create 3 nodes (2 from split + 1 single), got {len(nodes_df)}"
+
+        # Check that all nodes have valid single URIs
+        for _, row in nodes_df.iterrows():
+            uri = row["identifier"]
+            assert " " not in uri, f"URI should not contain spaces: {uri}"
+            assert uri.startswith("http://"), f"URI should start with http://: {uri}"
+
+        # Check specific URIs are present
+        identifiers = set(nodes_df["identifier"].tolist())
+        assert "http://purl.obolibrary.org/obo/UBERON_0001388" in identifiers
+        assert "http://purl.obolibrary.org/obo/UBERON_0001389" in identifiers
+        assert "http://purl.obolibrary.org/obo/UBERON_0002037" in identifiers
+
+    def test_create_characteristic_nodes_single_uri(self):
+        """Test that single URIs are handled correctly."""
+        from scripts.gea.gea_assay_extractor import create_characteristic_nodes
+
+        characteristics = {
+            "disease": [
+                {
+                    "value": "Alzheimer's disease",
+                    "uri": "http://purl.obolibrary.org/obo/MONDO_0004975",
+                }
+            ]
+        }
+
+        nodes_df = create_characteristic_nodes(characteristics, "Disease", "disease")
+
+        assert nodes_df is not None
+        assert len(nodes_df) == 1
+        assert nodes_df.iloc[0]["identifier"] == "http://purl.obolibrary.org/obo/MONDO_0004975"
+
+    def test_create_characteristic_nodes_no_uri(self):
+        """Test that values without URIs get spokegenelab URIs."""
+        from scripts.gea.gea_assay_extractor import create_characteristic_nodes
+
+        characteristics = {
+            "sex": [
+                {"value": "male", "uri": ""},
+                {"value": "female", "uri": ""},
+            ]
+        }
+
+        nodes_df = create_characteristic_nodes(characteristics, "Sex", "sex")
+
+        assert nodes_df is not None
+        assert len(nodes_df) == 2
+
+        # Check that spokegenelab URIs are generated
+        for _, row in nodes_df.iterrows():
+            assert row["identifier"].startswith("https://spoke.ucsf.edu/genelab/Sex/")
+
+    def test_create_study_characteristic_relationships_multi_uri(self):
+        """Test study-characteristic relationships with multi-URI fields."""
+        from scripts.gea.gea_assay_extractor import create_study_characteristic_relationships
+
+        characteristics = {
+            "organism part": [
+                {
+                    "value": "hippocampus entorhinal cortex",
+                    "uri": "http://purl.obolibrary.org/obo/UBERON_0001388 http://purl.obolibrary.org/obo/UBERON_0001389",
+                }
+            ]
+        }
+
+        rels_df = create_study_characteristic_relationships(
+            "E-TEST-001", characteristics, "organism part", "Anatomy"
+        )
+
+        assert rels_df is not None, "Should create relationships DataFrame"
+        assert len(rels_df) == 2, f"Should create 2 relationships (one per URI), got {len(rels_df)}"
+
+        # Check that all 'to' values are valid single URIs
+        for _, row in rels_df.iterrows():
+            to_uri = row["to"]
+            assert " " not in to_uri, f"Target URI should not contain spaces: {to_uri}"
+
+    def test_create_assay_factor_relationships_multi_uri(self):
+        """Test assay-factor relationships with multi-URI fields."""
+        import pandas as pd
+        from scripts.gea.gea_assay_extractor import create_assay_factor_relationships
+
+        # Assay nodes need reference_group_id and test_group_id columns
+        assay_nodes = pd.DataFrame({
+            "identifier": ["E-TEST-001-g1_g2"],
+            "contrast_groups": ["g1_g2"],
+            "reference_group_id": ["g1"],
+            "test_group_id": ["g2"],
+        })
+
+        group_factors = {
+            "g1": {
+                "disease": [
+                    {
+                        "value": "AD and Control",
+                        "uri": "http://purl.obolibrary.org/obo/MONDO_0004975 http://purl.obolibrary.org/obo/PATO_0000461",
+                    }
+                ]
+            },
+            "g2": {}  # No factors for test group
+        }
+
+        rels_df = create_assay_factor_relationships(
+            assay_nodes, group_factors, "disease", "Disease"
+        )
+
+        assert rels_df is not None, "Should create relationships DataFrame"
+        assert len(rels_df) == 2, f"Should create 2 relationships (one per URI), got {len(rels_df)}"
+
+        # Check that all 'to' values are valid single URIs
+        for _, row in rels_df.iterrows():
+            to_uri = row["to"]
+            assert " " not in to_uri, f"Target URI should not contain spaces: {to_uri}"
+
+    def test_multi_uri_in_rdf_output(self):
+        """Test that multi-URI fields produce valid RDF (no spaces in URIs)."""
+        from scripts.gea.gea_pipeline import process_gea_experiment
+        from scripts.rdf.turtle_writer import TurtleWriter
+        import io
+        import tempfile
+        import os
+
+        test_dir = get_test_data_dir(prefer_human=True)
+        if not test_dir or not test_dir.exists():
+            pytest.skip("Human test data not available")
+
+        result = process_gea_experiment(
+            str(test_dir),
+            p_value_threshold=0.01,
+            max_genes_per_assay=10,
+            include_gsea=False,
+            include_orthologs=False,
+        )
+
+        writer = TurtleWriter()
+        for node_type, df in result.nodes.items():
+            if not df.empty:
+                writer.add_nodes_from_dataframe(df, node_type)
+        for rel_type, df in result.relationships.items():
+            if not df.empty:
+                writer.add_relationships_from_dataframe(df, rel_type)
+
+        # Serialize to temp file to check for valid URIs
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.ttl', delete=False) as f:
+            temp_path = f.name
+
+        try:
+            writer.graph.serialize(destination=temp_path, format="turtle")
+            with open(temp_path, 'r') as f:
+                turtle_str = f.read()
+
+            # Check for the specific error pattern (space-separated URIs)
+            import re
+            # Look for patterns like <http://... http://...> which would be invalid
+            invalid_pattern = re.compile(r'<http://[^\s>]+\s+http://[^\s>]+>')
+            matches = invalid_pattern.findall(turtle_str)
+
+            assert len(matches) == 0, f"Found invalid URIs with spaces: {matches[:5]}"
+
+            print(f"Generated {len(turtle_str)} characters of valid Turtle RDF")
+        finally:
+            os.unlink(temp_path)
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v", "-s"])

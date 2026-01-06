@@ -6,6 +6,7 @@ and producing graph outputs (Neo4j CSV and/or RDF).
 """
 
 import os
+import time
 from pathlib import Path
 from typing import Dict, List, Optional, Union
 
@@ -307,25 +308,58 @@ def process_gea_batch(
     combined_result = GEAPipelineResult()
     experiments_dir = Path(experiments_dir)
 
-    # Find experiment directories
-    exp_dirs = [d for d in experiments_dir.iterdir() if d.is_dir() and "-gea" in d.name]
+    # Find experiment directories (sorted for consistent ordering)
+    exp_dirs = sorted([
+        d for d in experiments_dir.iterdir()
+        if d.is_dir() and d.name.endswith("-gea")
+    ])
+    total = len(exp_dirs)
 
-    print(f"Found {len(exp_dirs)} experiment directories")
+    print(f"Found {total} experiment directories")
+    print("=" * 60)
 
-    for exp_dir in exp_dirs:
+    # Track statistics
+    processed = 0
+    failed = 0
+    start_time = time.time()
+
+    for i, exp_dir in enumerate(exp_dirs, 1):
         try:
-            result = process_gea_experiment(exp_dir, config, **kwargs)
+            # Print progress with ETA
+            elapsed = time.time() - start_time
+            rate = processed / elapsed if elapsed > 0 else 0
+            eta = (total - i) / rate if rate > 0 else 0
+
+            print(f"[{i}/{total}] Processing {exp_dir.name}... (ETA: {eta/60:.1f} min)")
+
+            exp_result = process_gea_experiment(exp_dir, config, **kwargs)
 
             # Merge results
-            for node_type, df in result.nodes.items():
+            for node_type, df in exp_result.nodes.items():
                 combined_result.add_nodes(node_type, df)
-            for rel_type, df in result.relationships.items():
+            for rel_type, df in exp_result.relationships.items():
                 combined_result.add_relationships(rel_type, df)
 
-            combined_result.errors.extend(result.errors)
+            if exp_result.errors:
+                combined_result.errors.extend(
+                    [f"{exp_dir.name}: {e}" for e in exp_result.errors]
+                )
+                failed += 1
+            else:
+                processed += 1
 
         except Exception as e:
             combined_result.errors.append(f"{exp_dir.name}: {e}")
+            failed += 1
+            print(f"  ERROR: {e}")
+
+    # Print summary
+    elapsed = time.time() - start_time
+    print("=" * 60)
+    print(f"BATCH PROCESSING COMPLETE")
+    print(f"  Processed: {processed}/{total}")
+    print(f"  Failed: {failed}")
+    print(f"  Time: {elapsed/60:.1f} minutes")
 
     return combined_result
 
@@ -384,11 +418,19 @@ def run_gea_pipeline(
         rdf_dir = output_path / "rdf"
         rdf_dir.mkdir(parents=True, exist_ok=True)
 
+        rdf_file = rdf_dir / "gxa_rdf.ttl"
         write_graph_to_turtle(
             result.nodes,
             result.relationships,
-            rdf_dir / "gxa_rdf.ttl",
+            rdf_file,
         )
+
+        # Save errors to file if any
+        if result.errors:
+            error_file = rdf_file.with_suffix(".errors.txt")
+            with open(error_file, "w") as f:
+                f.write("\n".join(result.errors))
+            print(f"Errors saved to: {error_file}")
 
     return result
 

@@ -589,20 +589,34 @@ def create_characteristic_nodes(
         uri = item.get("uri", "")
         value = item.get("value", "")
 
-        # Use the full ontology URI as the identifier when available
-        if uri:
-            identifier = uri
+        # Handle cases where URI field contains multiple URIs separated by spaces
+        if uri and " " in uri and uri.startswith("http"):
+            # Split multiple URIs and create a node for each
+            uris = uri.split()
+            for single_uri in uris:
+                if single_uri.startswith("http"):
+                    nodes.append({
+                        "identifier": single_uri,
+                        "name": value,
+                        "uri": single_uri,
+                    })
+        elif uri:
+            # Single URI - use as identifier
+            nodes.append({
+                "identifier": uri,
+                "name": value,
+                "uri": uri,
+            })
         else:
             # Generate a spokegenelab URI for values without ontology URIs
             # Sanitize the value for use in URI
             safe_value = value.replace(" ", "_").replace("'", "")
             identifier = f"https://spoke.ucsf.edu/genelab/{node_type}/{safe_value}"
-
-        nodes.append({
-            "identifier": identifier,
-            "name": value,
-            "uri": uri,
-        })
+            nodes.append({
+                "identifier": identifier,
+                "name": value,
+                "uri": uri,
+            })
 
     if nodes:
         df = pd.DataFrame(nodes).drop_duplicates(subset=["identifier"])
@@ -706,13 +720,18 @@ def create_study_characteristic_relationships(
         uri = item.get("uri", "")
         value = item.get("value", "")
 
-        if uri:
-            to_id = uri
+        # Handle cases where URI field contains multiple URIs separated by spaces
+        if uri and " " in uri and uri.startswith("http"):
+            uris = uri.split()
+            for single_uri in uris:
+                if single_uri.startswith("http"):
+                    relationships.append({"from": study_id, "to": single_uri})
+        elif uri:
+            relationships.append({"from": study_id, "to": uri})
         else:
             safe_value = value.replace(" ", "_").replace("'", "")
             to_id = f"https://spoke.ucsf.edu/genelab/{node_type}/{safe_value}"
-
-        relationships.append({"from": study_id, "to": to_id})
+            relationships.append({"from": study_id, "to": to_id})
 
     if relationships:
         return pd.DataFrame(relationships).drop_duplicates()
@@ -795,13 +814,18 @@ def create_assay_factor_relationships(
                 uri = item.get("uri", "")
                 value = item.get("value", "")
 
-                if uri:
-                    to_id = uri
+                # Handle cases where URI field contains multiple URIs separated by spaces
+                if uri and " " in uri and uri.startswith("http"):
+                    uris = uri.split()
+                    for single_uri in uris:
+                        if single_uri.startswith("http"):
+                            relationships.append({"from": assay_id, "to": single_uri})
+                elif uri:
+                    relationships.append({"from": assay_id, "to": uri})
                 else:
                     safe_value = value.replace(" ", "_").replace("'", "")
                     to_id = f"https://spoke.ucsf.edu/genelab/{node_type}/{safe_value}"
-
-                relationships.append({"from": assay_id, "to": to_id})
+                    relationships.append({"from": assay_id, "to": to_id})
 
     if relationships:
         return pd.DataFrame(relationships).drop_duplicates()
@@ -894,13 +918,18 @@ def create_assay_characteristic_relationships(
                 uri = item.get("uri", "")
                 value = item.get("value", "")
 
-                if uri:
-                    to_id = uri
+                # Handle cases where URI field contains multiple URIs separated by spaces
+                if uri and " " in uri and uri.startswith("http"):
+                    uris = uri.split()
+                    for single_uri in uris:
+                        if single_uri.startswith("http"):
+                            relationships.append({"from": assay_id, "to": single_uri})
+                elif uri:
+                    relationships.append({"from": assay_id, "to": uri})
                 else:
                     safe_value = value.replace(" ", "_").replace("'", "")
                     to_id = f"https://spoke.ucsf.edu/genelab/{node_type}/{safe_value}"
-
-                relationships.append({"from": assay_id, "to": to_id})
+                    relationships.append({"from": assay_id, "to": to_id})
 
     if relationships:
         return pd.DataFrame(relationships).drop_duplicates()
