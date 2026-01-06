@@ -76,8 +76,10 @@ class TurtleWriter:
         if identifier.startswith("http://") or identifier.startswith("https://"):
             node_uri = create_uri_from_ontology_uri(identifier)
         else:
+            # Get id_source from properties for namespace selection (e.g., NCBIGene vs Ensembl)
+            id_source = properties.get("id_source")
             # Create node URI using namespace
-            node_uri = create_node_uri(node_type, identifier)
+            node_uri = create_node_uri(node_type, identifier, id_source)
 
         # Add type triple
         biolink_class = get_biolink_class(
@@ -318,7 +320,15 @@ class TurtleWriter:
         if to_id.startswith("http://") or to_id.startswith("https://"):
             to_uri = create_uri_from_ontology_uri(to_id)
         else:
-            to_uri = create_node_uri(to_type, to_id)
+            # Determine id_source for genes based on identifier format
+            id_source = None
+            if to_type in ("MGene", "Gene"):
+                to_id_str = str(to_id)
+                if to_id_str.startswith("ENSG") or to_id_str.startswith("ENSMUS"):
+                    id_source = "Ensembl"
+                else:
+                    id_source = "NCBIGene"
+            to_uri = create_node_uri(to_type, to_id, id_source)
 
         predicate = get_biolink_predicate(rel_type)
 

@@ -12,6 +12,7 @@ from typing import Dict, List, Optional, Tuple
 import pandas as pd
 
 from .gea_parser import GEAExperiment, parse_analytics_file
+from ..common.gene_id_mapper import add_ncbi_gene_ids
 
 # Add notebooks directory to path for ortholog_mapper
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "notebooks"))
@@ -36,7 +37,7 @@ def extract_genes_from_analytics(
         taxonomy: NCBI taxonomy ID
 
     Returns:
-        DataFrame with gene information (gene_id, gene_name, organism, taxonomy)
+        DataFrame with gene information including NCBI and Ensembl IDs
     """
     df = parse_analytics_file(analytics_file)
 
@@ -52,14 +53,28 @@ def extract_genes_from_analytics(
 
     # Rename to match schema
     genes = genes.rename(columns={
-        "gene_id": "identifier",
+        "gene_id": "ensembl_id",
         "gene_name": "symbol",
     })
 
     # Add empty name column (GEA doesn't typically have full gene names)
     genes["name"] = ""
 
-    return genes[["identifier", "symbol", "name", "organism", "taxonomy"]]
+    # For human genes, map Ensembl IDs to NCBI gene IDs
+    if taxonomy == "9606":
+        genes = add_ncbi_gene_ids(genes, ensembl_col="ensembl_id", ncbi_col="ncbi_gene_id")
+        # Use NCBI gene ID as identifier when available, otherwise use Ensembl ID
+        genes["identifier"] = genes["ncbi_gene_id"].fillna(genes["ensembl_id"])
+        genes["id_source"] = genes["ncbi_gene_id"].apply(
+            lambda x: "NCBIGene" if pd.notna(x) else "Ensembl"
+        )
+    else:
+        # For non-human, use Ensembl ID as identifier
+        genes["identifier"] = genes["ensembl_id"]
+        genes["ncbi_gene_id"] = None
+        genes["id_source"] = "Ensembl"
+
+    return genes[["identifier", "ensembl_id", "ncbi_gene_id", "symbol", "name", "organism", "taxonomy", "id_source"]]
 
 
 def extract_genes_from_experiment(experiment: GEAExperiment) -> pd.DataFrame:
@@ -198,9 +213,23 @@ def extract_differential_expression(
         max_genes_per_assay: Maximum number of DE genes to include per assay (default 200)
 
     Returns:
-        DataFrame with columns: assay_id, gene_id, log2fc, p_value
+        DataFrame with columns: from, to, log2fc, adj_p_value
     """
     all_de = []
+
+    # Get taxonomy for gene ID mapping
+    taxonomy = experiment.taxonomy_id
+    if not taxonomy:
+        from .gea_parser import get_organism_taxonomy
+        taxonomy = get_organism_taxonomy(experiment.organism)
+
+    # Build Ensembl -> NCBI gene ID mapping for human genes
+    ensembl_to_identifier = {}
+    if taxonomy == "9606":
+        from ..common.gene_id_mapper import get_ensembl_to_ncbi_map
+        ncbi_map = get_ensembl_to_ncbi_map()
+        # Map to NCBI ID if available, otherwise use Ensembl ID
+        ensembl_to_identifier = {k: v if v else k for k, v in ncbi_map.items()}
 
     for analytics_file in experiment.analytics_files:
         df = parse_analytics_file(analytics_file)
@@ -237,8 +266,15 @@ def extract_differential_expression(
             assay_id = f"{experiment.accession}-{contrast_id}"
             de_data["assay_id"] = assay_id
 
-            # Rename gene_id to match
-            de_data = de_data.rename(columns={"gene_id": "to"})
+            # Map gene IDs to NCBI IDs for human genes
+            if taxonomy == "9606" and ensembl_to_identifier:
+                # Use NCBI ID if available, otherwise keep Ensembl ID
+                de_data["to"] = de_data["gene_id"].map(
+                    lambda x: ensembl_to_identifier.get(x, x)
+                )
+            else:
+                de_data["to"] = de_data["gene_id"]
+
             de_data["from"] = assay_id
 
             all_de.append(de_data[["from", "to", "log2fc", "p_value"]])

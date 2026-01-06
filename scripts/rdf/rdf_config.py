@@ -167,22 +167,30 @@ def create_uri(namespace: Namespace, identifier: str) -> URIRef:
     return namespace[clean_id]
 
 
-def get_namespace_for_node_type(node_type: str) -> Namespace:
+def get_namespace_for_node_type(node_type: str, id_source: str = None) -> Namespace:
     """
     Get the appropriate namespace for a node type.
 
     Args:
         node_type: Node type name
+        id_source: Optional ID source (e.g., "NCBIGene", "Ensembl")
 
     Returns:
         Namespace for that node type
     """
+    # For genes, use namespace based on ID source
+    if node_type in ("MGene", "Gene") and id_source:
+        if id_source == "NCBIGene":
+            return NCBIGENE
+        elif id_source == "Ensembl":
+            return ENSEMBL
+
     namespace_map = {
         "Study": SPOKEGENELAB,
         "Mission": SPOKEGENELAB,
         "Assay": SPOKEGENELAB,
-        "MGene": NCBIGENE,
-        "Gene": NCBIGENE,
+        "MGene": NCBIGENE,  # Default, but may be overridden by id_source
+        "Gene": NCBIGENE,   # Default, but may be overridden by id_source
         "Anatomy": UBERON,
         "CellType": CL,
         "PathwayEnrichment": SPOKEGENELAB,
@@ -285,17 +293,18 @@ def format_identifier_for_namespace(identifier: str, node_type: str) -> str:
     return id_str
 
 
-def create_node_uri(node_type: str, identifier: str) -> URIRef:
+def create_node_uri(node_type: str, identifier: str, id_source: str = None) -> URIRef:
     """
     Create a URI for a node.
 
     Args:
         node_type: Type of node
         identifier: Node identifier
+        id_source: Optional ID source (e.g., "NCBIGene", "Ensembl") for namespace selection
 
     Returns:
         URIRef for the node
     """
-    namespace = get_namespace_for_node_type(node_type)
+    namespace = get_namespace_for_node_type(node_type, id_source)
     formatted_id = format_identifier_for_namespace(identifier, node_type)
     return create_uri(namespace, formatted_id)
