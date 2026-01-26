@@ -1,0 +1,97 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#e1f5fe', 'primaryTextColor': '#01579b', 'primaryBorderColor': '#0288d1', 'lineColor': '#0288d1', 'secondaryColor': '#fff3e0', 'tertiaryColor': '#e8f5e9'}}}%%
+flowchart TB
+    subgraph Legend["Legend"]
+        direction LR
+        L1["Biolink Class"]
+        L2[/"Custom Extension"/]
+        L3(["External Ontology"])
+    end
+
+    subgraph Core["Core Entities"]
+        Mission["Mission<br/><i>biolink:Activity</i>"]
+        Study["Study<br/><i>biolink:Study</i>"]
+        Assay["Assay<br/><i>biolink:Assay</i>"]
+    end
+
+    subgraph Genes["Gene Entities"]
+        MGene["MGene<br/><i>biolink:Gene</i><br/>(Ensembl)"]
+        Gene["Gene<br/><i>biolink:Gene</i><br/>(NCBI)"]
+    end
+
+    subgraph Biological["Biological Context"]
+        Anatomy(["Anatomy<br/><i>biolink:AnatomicalEntity</i><br/>(UBERON)"])
+        CellType(["CellType<br/><i>biolink:Cell</i><br/>(CL)"])
+        Disease(["Disease<br/><i>biolink:Disease</i><br/>(MONDO)"])
+    end
+
+    subgraph Characteristics["Sample Characteristics"]
+        Sex(["Sex<br/><i>biolink:BiologicalSex</i><br/>(PATO)"])
+        DevStage(["DevelopmentalStage<br/><i>biolink:LifeStage</i><br/>(EFO)"])
+        EthnicGrp(["EthnicGroup<br/><i>biolink:Population</i><br/>(HANCESTRO)"])
+        OrgStatus(["OrganismStatus<br/><i>biolink:Attribute</i><br/>(PATO)"])
+    end
+
+    subgraph Enrichment["Functional Enrichment"]
+        PathEnrich[/"PathwayEnrichment<br/><i>biolink:Association</i>"/]
+        GOTerm(["GOTerm<br/><i>biolink:BiologicalProcess</i><br/><i>biolink:MolecularActivity</i><br/><i>biolink:CellularComponent</i><br/>(GO)"])
+        Reactome(["ReactomePathway<br/><i>biolink:Pathway</i>"])
+        InterPro(["InterProDomain<br/><i>biolink:ProteinDomain</i>"])
+    end
+
+    subgraph Methylation["Methylation"]
+        MethRegion[/"MethylationRegion<br/><i>biolink:GenomicEntity</i>"/]
+    end
+
+    subgraph Reified["Reified Associations"]
+        DEAssoc[/"DE Association<br/><i>biolink:GeneExpressionMixin</i><br/>log2fc, adj_p_value"/]
+        DMAssoc[/"DM Association<br/><i>biolink:Association</i><br/>log2fc, adj_p_value"/]
+    end
+
+    %% Core relationships
+    Mission -->|"has_part"| Study
+    Study -->|"has_output"| Assay
+
+    %% Study characteristics
+    Study -->|"studies"| Disease
+    Study -->|"has_attribute"| Sex
+    Study -->|"has_attribute"| DevStage
+    Study -->|"has_attribute"| EthnicGrp
+    Study -->|"has_attribute"| OrgStatus
+
+    %% Assay relationships
+    Assay -->|"has_input"| Anatomy
+    Assay -->|"has_input"| CellType
+    Assay -->|"has_attribute"| Anatomy
+    Assay -->|"has_attribute"| CellType
+    Assay -->|"has_input"| Disease
+
+    %% Differential expression (reified)
+    Assay -.->|"subject"| DEAssoc
+    DEAssoc -.->|"object"| MGene
+    DEAssoc -.->|"predicate:<br/>affects_expression_of"| MGene
+
+    %% Differential methylation (reified)
+    Assay -.->|"subject"| DMAssoc
+    DMAssoc -.->|"object"| MethRegion
+    DMAssoc -.->|"predicate:<br/>affects"| MethRegion
+
+    %% Gene relationships
+    MGene -->|"orthologous_to"| Gene
+    MGene -->|"overlaps"| MethRegion
+
+    %% Enrichment relationships
+    Assay -->|"has_output"| PathEnrich
+    PathEnrich -->|"participates_in"| GOTerm
+    PathEnrich -->|"participates_in"| Reactome
+    PathEnrich -->|"participates_in"| InterPro
+
+    %% Styling
+    classDef biolink fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
+    classDef custom fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    classDef ontology fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    classDef reified fill:#fce4ec,stroke:#e91e63,stroke-width:2px,stroke-dasharray: 5 5
+
+    class Mission,Study,Assay,MGene,Gene biolink
+    class PathEnrich,MethRegion custom
+    class Anatomy,CellType,Disease,Sex,DevStage,EthnicGrp,OrgStatus,GOTerm,Reactome,InterPro ontology
+    class DEAssoc,DMAssoc reified

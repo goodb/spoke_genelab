@@ -1,0 +1,236 @@
+================================================================================
+SPOKE-GeneLab Biolink Data Model Specification
+================================================================================
+
+This document describes the Biolink Model classes and properties used by the
+gea_pipeline, along with custom extensions in the SPOKEGENELAB namespace.
+
+Generated: 2026-01-26
+Source files:
+  - scripts/rdf/biolink_mapper.py
+  - scripts/rdf/rdf_config.py
+
+================================================================================
+1. NAMESPACES
+================================================================================
+
+Core Namespaces:
+  biolink:      https://w3id.org/biolink/vocab/
+  spokegenelab: https://spoke.ucsf.edu/genelab/
+  obo:          http://purl.obolibrary.org/obo/
+
+Identifier Namespaces:
+  ncbigene:     https://www.ncbi.nlm.nih.gov/gene/
+  ncbitaxon:    http://purl.obolibrary.org/obo/NCBITaxon_
+  ensembl:      http://identifiers.org/ensembl/
+
+Ontology Namespaces:
+  uberon:       http://purl.obolibrary.org/obo/UBERON_     (Anatomy)
+  cl:           http://purl.obolibrary.org/obo/CL_         (Cell Types)
+  go:           http://purl.obolibrary.org/obo/GO_         (Gene Ontology)
+  reactome:     https://reactome.org/content/detail/       (Pathways)
+  interpro:     https://www.ebi.ac.uk/interpro/entry/InterPro/
+  mondo:        http://purl.obolibrary.org/obo/MONDO_      (Diseases)
+  pato:         http://purl.obolibrary.org/obo/PATO_       (Phenotypes)
+  hancestro:    http://purl.obolibrary.org/obo/HANCESTRO_  (Ancestry)
+  efo:          http://www.ebi.ac.uk/efo/EFO_              (Experimental Factors)
+
+Data Source Namespaces:
+  osdr:         https://osdr.nasa.gov/bio/repo/data/studies/
+  gea:          https://www.ebi.ac.uk/gxa/experiments/
+
+================================================================================
+2. BIOLINK NODE CLASSES
+================================================================================
+
+Internal Type         | Biolink Class                    | URI Namespace
+----------------------|----------------------------------|------------------
+Mission               | biolink:Activity                 | spokegenelab
+Study                 | biolink:Study                    | spokegenelab
+Assay                 | biolink:Assay                    | spokegenelab
+MGene                 | biolink:Gene                     | ensembl/ncbigene
+Gene                  | biolink:Gene                     | ncbigene
+Anatomy               | biolink:AnatomicalEntity         | uberon
+CellType              | biolink:Cell                     | cl
+MethylationRegion     | biolink:GenomicEntity            | spokegenelab
+PathwayEnrichment     | biolink:Association              | spokegenelab
+GOTerm (BP)           | biolink:BiologicalProcess        | go
+GOTerm (MF)           | biolink:MolecularActivity        | go
+GOTerm (CC)           | biolink:CellularComponent        | go
+ReactomePathway       | biolink:Pathway                  | reactome
+InterProDomain        | biolink:ProteinDomain            | interpro
+Disease               | biolink:Disease                  | mondo
+Sex                   | biolink:BiologicalSex            | pato
+DevelopmentalStage    | biolink:LifeStage                | efo
+EthnicGroup           | biolink:PopulationOfIndividualOrganisms | hancestro
+OrganismStatus        | biolink:Attribute                | pato
+
+================================================================================
+3. BIOLINK PREDICATES (Relationships)
+================================================================================
+
+Relationship                      | Biolink Predicate                | Domain -> Range
+----------------------------------|----------------------------------|------------------
+CONDUCTED                         | biolink:has_part                 | Mission -> Study
+PERFORMED                         | biolink:has_output               | Study -> Assay
+MEASURED_DIFFERENTIAL_EXPRESSION  | biolink:affects_expression_of    | Assay -> Gene
+MEASURED_DIFFERENTIAL_METHYLATION | biolink:affects                  | Assay -> MethylationRegion
+IS_ORTHOLOG                       | biolink:orthologous_to           | Gene -> Gene
+INVESTIGATED                      | biolink:has_input                | Assay -> Anatomy/CellType
+METHYLATED_IN                     | biolink:overlaps                 | Gene -> MethylationRegion
+HAS_ENRICHMENT                    | biolink:has_output               | Assay -> PathwayEnrichment
+ENRICHES                          | biolink:participates_in          | PathwayEnrichment -> Term
+HAS_DISEASE                       | biolink:studies                  | Study -> Disease
+HAS_SEX                           | biolink:has_attribute            | Study -> Sex
+HAS_DEVELOPMENTAL_STAGE           | biolink:has_attribute            | Study -> LifeStage
+HAS_ETHNIC_GROUP                  | biolink:has_attribute            | Study -> EthnicGroup
+HAS_ORGANISM_STATUS               | biolink:has_attribute            | Study -> Attribute
+HAS_ATTRIBUTE                     | biolink:has_attribute            | Assay -> CellType/Anatomy
+HAS_INPUT                         | biolink:has_input                | Assay -> Disease
+
+================================================================================
+4. BIOLINK ENTITY PROPERTIES
+================================================================================
+
+Standard Biolink Properties:
+  biolink:id          - Entity identifier
+  biolink:name        - Entity name
+  biolink:description - Entity description
+  biolink:symbol      - Gene symbol
+  biolink:category    - Entity category (for GO terms)
+  biolink:in_taxon    - Organism/taxonomy information
+
+Reification Properties (for Associations):
+  biolink:subject     - Subject of the association
+  biolink:predicate   - Predicate URI of the association
+  biolink:object      - Object of the association
+
+================================================================================
+5. SPOKEGENELAB CUSTOM EXTENSIONS
+================================================================================
+
+Quantitative Properties (on reified associations):
+  spokegenelab:log2fc        - Log2 fold change (float)
+  spokegenelab:adj_p_value   - Adjusted p-value (float)
+  spokegenelab:p_value       - Raw p-value (float)
+  spokegenelab:effect_size   - Effect size (float)
+
+Study Properties:
+  spokegenelab:project_title          - Full project title
+  spokegenelab:project_type           - Project type (e.g., "Gene Expression Atlas")
+  spokegenelab:source                 - Data source (e.g., "GEA")
+  spokegenelab:study_id               - Study identifier
+  spokegenelab:experiment_accession   - Experiment accession
+  spokegenelab:submitter_name         - Submitter name
+  spokegenelab:submitter_email        - Submitter email
+  spokegenelab:submitter_affiliation  - Submitter affiliation
+  spokegenelab:pubmed_id              - PubMed ID
+  spokegenelab:secondary_accessions   - Secondary accessions
+
+Assay Properties:
+  spokegenelab:contrast_id            - Contrast identifier
+  spokegenelab:technology             - Technology type
+  spokegenelab:measurement            - Measurement type
+  spokegenelab:reference_group_id     - Reference group ID
+  spokegenelab:reference_group_label  - Reference group label
+  spokegenelab:test_group_id          - Test group ID
+  spokegenelab:test_group_label       - Test group label
+  spokegenelab:experimental_factors   - Experimental factors
+  spokegenelab:array_design           - Array design information
+
+Gene Properties:
+  spokegenelab:ncbi_gene_id   - NCBI Gene ID
+  spokegenelab:ensembl_id     - Ensembl ID
+  spokegenelab:id_source      - ID source ("NCBIGene" or "Ensembl")
+
+Enrichment Properties:
+  spokegenelab:enrichment_type    - Type of enrichment (GO, Reactome, InterPro)
+  spokegenelab:term_id            - Term identifier
+  spokegenelab:genes_significant  - Count of significant genes
+  spokegenelab:genes_total        - Total genes in term
+  spokegenelab:source             - Source database
+
+================================================================================
+6. REIFIED ASSOCIATIONS
+================================================================================
+
+Differential expression relationships are reified to preserve quantitative data.
+
+Association Class: biolink:GeneExpressionMixin
+
+Structure:
+  <spokegenelab:Association/{hash}>
+      a biolink:GeneExpressionMixin ;
+      biolink:subject <assay_uri> ;
+      biolink:predicate biolink:affects_expression_of ;
+      biolink:object <gene_uri> ;
+      spokegenelab:log2fc "value"^^xsd:float ;
+      spokegenelab:adj_p_value "value"^^xsd:float .
+
+Differential methylation uses biolink:Association class.
+
+================================================================================
+7. XSD DATATYPES
+================================================================================
+
+Python Type | XSD Type
+------------|----------------
+string      | xsd:string
+int         | xsd:integer
+float       | xsd:float
+double      | xsd:double
+boolean     | xsd:boolean
+date        | xsd:date
+datetime    | xsd:dateTime
+
+================================================================================
+8. ENTITY RELATIONSHIP SUMMARY
+================================================================================
+
+                                    +-----------+
+                                    |  Mission  |
+                                    | (Activity)|
+                                    +-----+-----+
+                                          | has_part
+                                          v
++-------------+    studies    +----------+----------+
+|   Disease   |<--------------|        Study        |
++-------------+               |       (Study)       |
+                              +----------+----------+
+                                         | has_output
+                     +-------------------+-------------------+
+                     v                   v                   v
+              +------+------+     +------+------+     +------+------+
+              |   Sex       |     |DevelopStage |     |  EthnicGrp  |
+              |(BioSex)     |     | (LifeStage) |     | (Population)|
+              +-------------+     +-------------+     +-------------+
+
+                                  +------+------+
+                                  |    Assay    |
+                                  |   (Assay)   |
+                                  +------+------+
+                          has_input |    | has_output
+                    +---------------+    +---------------+
+                    v               v                    v
+             +------+------+  +----+-----+        +-----+------+
+             |   Anatomy   |  | CellType |        | Enrichment |
+             |(AnatEntity) |  |  (Cell)  |        |(Association)|
+             +-------------+  +----------+        +------+-----+
+                                                         | participates_in
+                       affects_expression_of             v
+                    +------------------------+    +------+------+
+                    v                        |    |   GOTerm    |
+             +------+------+                 |    | ReactomePW  |
+             |    Gene     |                 |    | InterProDom |
+             |   (Gene)    |<----------------+    +-------------+
+             +------+------+
+                    | orthologous_to
+                    v
+             +------+------+
+             |  Human Gene |
+             |   (Gene)    |
+             +-------------+
+
+================================================================================
+END OF DOCUMENT
+================================================================================

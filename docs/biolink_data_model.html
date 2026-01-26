@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPOKE-GeneLab Biolink Data Model</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 { color: #01579b; border-bottom: 3px solid #0288d1; padding-bottom: 10px; }
+        h2 { color: #0288d1; margin-top: 30px; }
+        .mermaid {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        .legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .legend-item { display: flex; align-items: center; gap: 8px; }
+        .legend-box { width: 20px; height: 20px; border-radius: 4px; border: 2px solid; }
+        .biolink { background: #e1f5fe; border-color: #0288d1; }
+        .custom { background: #fff3e0; border-color: #ff9800; }
+        .ontology { background: #e8f5e9; border-color: #4caf50; }
+        .reified { background: #fce4ec; border-color: #e91e63; border-style: dashed; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        th { background: #0288d1; color: white; padding: 12px; text-align: left; }
+        td { padding: 10px 12px; border-bottom: 1px solid #e0e0e0; }
+        tr:nth-child(even) { background: #f5f5f5; }
+        tr:hover { background: #e3f2fd; }
+        code { background: #eceff1; padding: 2px 6px; border-radius: 4px; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.9em; }
+        .namespace-section { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <h1>SPOKE-GeneLab Biolink Data Model</h1>
+    <div class="legend">
+        <div class="legend-item"><div class="legend-box biolink"></div><span>Biolink Core Class</span></div>
+        <div class="legend-item"><div class="legend-box custom"></div><span>Custom Extension (spokegenelab)</span></div>
+        <div class="legend-item"><div class="legend-box ontology"></div><span>External Ontology</span></div>
+        <div class="legend-item"><div class="legend-box reified"></div><span>Reified Association</span></div>
+    </div>
+    <h2>Entity Relationship Diagram</h2>
+    <div class="mermaid">
+flowchart TB
+    subgraph Core["Core Entities"]
+        Mission["Mission<br/><i>biolink:Activity</i>"]
+        Study["Study<br/><i>biolink:Study</i>"]
+        Assay["Assay<br/><i>biolink:Assay</i>"]
+    end
+    subgraph Genes["Gene Entities"]
+        MGene["MGene<br/><i>biolink:Gene</i><br/>(Ensembl)"]
+        Gene["Gene<br/><i>biolink:Gene</i><br/>(NCBI)"]
+    end
+    subgraph Biological["Biological Context"]
+        Anatomy(["Anatomy<br/><i>biolink:AnatomicalEntity</i><br/>(UBERON)"])
+        CellType(["CellType<br/><i>biolink:Cell</i><br/>(CL)"])
+        Disease(["Disease<br/><i>biolink:Disease</i><br/>(MONDO)"])
+    end
+    subgraph Characteristics["Sample Characteristics"]
+        Sex(["Sex<br/><i>biolink:BiologicalSex</i><br/>(PATO)"])
+        DevStage(["DevelopmentalStage<br/><i>biolink:LifeStage</i><br/>(EFO)"])
+        EthnicGrp(["EthnicGroup<br/><i>biolink:Population</i><br/>(HANCESTRO)"])
+    end
+    subgraph Enrichment["Functional Enrichment"]
+        PathEnrich[/"PathwayEnrichment<br/><i>biolink:Association</i>"/]
+        GOTerm(["GOTerm<br/>(GO)"])
+        Reactome(["ReactomePathway<br/><i>biolink:Pathway</i>"])
+        InterPro(["InterProDomain<br/><i>biolink:ProteinDomain</i>"])
+    end
+    subgraph Reified["Reified Associations"]
+        DEAssoc[/"DE Association<br/><i>biolink:GeneExpressionMixin</i><br/>log2fc, adj_p_value"/]
+    end
+    Mission -->|"has_part"| Study
+    Study -->|"has_output"| Assay
+    Study -->|"studies"| Disease
+    Study -->|"has_attribute"| Sex
+    Study -->|"has_attribute"| DevStage
+    Study -->|"has_attribute"| EthnicGrp
+    Assay -->|"has_input"| Anatomy
+    Assay -->|"has_input"| CellType
+    Assay -.->|"subject"| DEAssoc
+    DEAssoc -.->|"object"| MGene
+    MGene -->|"orthologous_to"| Gene
+    Assay -->|"has_output"| PathEnrich
+    PathEnrich -->|"participates_in"| GOTerm
+    PathEnrich -->|"participates_in"| Reactome
+    PathEnrich -->|"participates_in"| InterPro
+    classDef biolink fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
+    classDef custom fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    classDef ontology fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    classDef reified fill:#fce4ec,stroke:#e91e63,stroke-width:2px,stroke-dasharray: 5 5
+    class Mission,Study,Assay,MGene,Gene biolink
+    class PathEnrich custom
+    class Anatomy,CellType,Disease,Sex,DevStage,EthnicGrp,GOTerm,Reactome,InterPro ontology
+    class DEAssoc reified
+    </div>
+    <h2>Namespaces</h2>
+    <div class="namespace-section">
+        <h3>Core</h3>
+        <table>
+            <tr><th>Prefix</th><th>URI</th><th>Purpose</th></tr>
+            <tr><td><code>biolink:</code></td><td>https://w3id.org/biolink/vocab/</td><td>Biolink Model classes & properties</td></tr>
+            <tr><td><code>spokegenelab:</code></td><td>https://spoke.ucsf.edu/genelab/</td><td>Custom extensions</td></tr>
+        </table>
+        <h3>External Identifiers</h3>
+        <table>
+            <tr><th>Prefix</th><th>URI</th><th>Purpose</th></tr>
+            <tr><td><code>ncbigene:</code></td><td>https://www.ncbi.nlm.nih.gov/gene/</td><td>NCBI Gene IDs</td></tr>
+            <tr><td><code>ensembl:</code></td><td>http://identifiers.org/ensembl/</td><td>Ensembl Gene IDs</td></tr>
+            <tr><td><code>ncbitaxon:</code></td><td>http://purl.obolibrary.org/obo/NCBITaxon_</td><td>Taxonomy</td></tr>
+        </table>
+        <h3>Ontologies</h3>
+        <table>
+            <tr><th>Prefix</th><th>URI</th><th>Purpose</th></tr>
+            <tr><td><code>uberon:</code></td><td>http://purl.obolibrary.org/obo/UBERON_</td><td>Anatomy</td></tr>
+            <tr><td><code>cl:</code></td><td>http://purl.obolibrary.org/obo/CL_</td><td>Cell Types</td></tr>
+            <tr><td><code>go:</code></td><td>http://purl.obolibrary.org/obo/GO_</td><td>Gene Ontology</td></tr>
+            <tr><td><code>mondo:</code></td><td>http://purl.obolibrary.org/obo/MONDO_</td><td>Diseases</td></tr>
+            <tr><td><code>pato:</code></td><td>http://purl.obolibrary.org/obo/PATO_</td><td>Phenotypes</td></tr>
+            <tr><td><code>efo:</code></td><td>http://www.ebi.ac.uk/efo/EFO_</td><td>Experimental Factors</td></tr>
+            <tr><td><code>hancestro:</code></td><td>http://purl.obolibrary.org/obo/HANCESTRO_</td><td>Ancestry</td></tr>
+            <tr><td><code>reactome:</code></td><td>https://reactome.org/content/detail/</td><td>Pathways</td></tr>
+            <tr><td><code>interpro:</code></td><td>https://www.ebi.ac.uk/interpro/entry/InterPro/</td><td>Protein Domains</td></tr>
+        </table>
+    </div>
+    <h2>Biolink Classes</h2>
+    <table>
+        <tr><th>Internal Type</th><th>Biolink Class</th><th>Namespace</th></tr>
+        <tr><td>Mission</td><td><code>biolink:Activity</code></td><td>spokegenelab</td></tr>
+        <tr><td>Study</td><td><code>biolink:Study</code></td><td>spokegenelab</td></tr>
+        <tr><td>Assay</td><td><code>biolink:Assay</code></td><td>spokegenelab</td></tr>
+        <tr><td>MGene</td><td><code>biolink:Gene</code></td><td>ensembl / ncbigene</td></tr>
+        <tr><td>Anatomy</td><td><code>biolink:AnatomicalEntity</code></td><td>uberon</td></tr>
+        <tr><td>CellType</td><td><code>biolink:Cell</code></td><td>cl</td></tr>
+        <tr><td>Disease</td><td><code>biolink:Disease</code></td><td>mondo</td></tr>
+        <tr><td>GOTerm (BP)</td><td><code>biolink:BiologicalProcess</code></td><td>go</td></tr>
+        <tr><td>GOTerm (MF)</td><td><code>biolink:MolecularActivity</code></td><td>go</td></tr>
+        <tr><td>GOTerm (CC)</td><td><code>biolink:CellularComponent</code></td><td>go</td></tr>
+        <tr><td>ReactomePathway</td><td><code>biolink:Pathway</code></td><td>reactome</td></tr>
+        <tr><td>InterProDomain</td><td><code>biolink:ProteinDomain</code></td><td>interpro</td></tr>
+        <tr><td>PathwayEnrichment</td><td><code>biolink:Association</code></td><td>spokegenelab</td></tr>
+        <tr><td>MethylationRegion</td><td><code>biolink:GenomicEntity</code></td><td>spokegenelab</td></tr>
+    </table>
+    <h2>Predicates</h2>
+    <table>
+        <tr><th>Relationship</th><th>Biolink Predicate</th><th>Domain → Range</th></tr>
+        <tr><td>CONDUCTED</td><td><code>biolink:has_part</code></td><td>Mission → Study</td></tr>
+        <tr><td>PERFORMED</td><td><code>biolink:has_output</code></td><td>Study → Assay</td></tr>
+        <tr><td>MEASURED_DIFFERENTIAL_EXPRESSION</td><td><code>biolink:affects_expression_of</code></td><td>Assay → Gene</td></tr>
+        <tr><td>IS_ORTHOLOG</td><td><code>biolink:orthologous_to</code></td><td>Gene → Gene</td></tr>
+        <tr><td>INVESTIGATED</td><td><code>biolink:has_input</code></td><td>Assay → Anatomy/CellType</td></tr>
+        <tr><td>HAS_ENRICHMENT</td><td><code>biolink:has_output</code></td><td>Assay → PathwayEnrichment</td></tr>
+        <tr><td>ENRICHES</td><td><code>biolink:participates_in</code></td><td>PathwayEnrichment → Term</td></tr>
+        <tr><td>HAS_DISEASE</td><td><code>biolink:studies</code></td><td>Study → Disease</td></tr>
+        <tr><td>HAS_SEX / HAS_DEVELOPMENTAL_STAGE</td><td><code>biolink:has_attribute</code></td><td>Study → Characteristic</td></tr>
+    </table>
+    <h2>Custom Properties (spokegenelab namespace)</h2>
+    <table>
+        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+        <tr><td><code>spokegenelab:log2fc</code></td><td>xsd:float</td><td>Log2 fold change</td></tr>
+        <tr><td><code>spokegenelab:adj_p_value</code></td><td>xsd:float</td><td>Adjusted p-value</td></tr>
+        <tr><td><code>spokegenelab:p_value</code></td><td>xsd:float</td><td>Raw p-value</td></tr>
+        <tr><td><code>spokegenelab:effect_size</code></td><td>xsd:float</td><td>Effect size</td></tr>
+        <tr><td><code>spokegenelab:project_title</code></td><td>xsd:string</td><td>Full project title</td></tr>
+        <tr><td><code>spokegenelab:experiment_accession</code></td><td>xsd:string</td><td>Experiment accession</td></tr>
+        <tr><td><code>spokegenelab:contrast_id</code></td><td>xsd:string</td><td>Contrast identifier</td></tr>
+        <tr><td><code>spokegenelab:technology</code></td><td>xsd:string</td><td>Technology type</td></tr>
+        <tr><td><code>spokegenelab:ensembl_id</code></td><td>xsd:string</td><td>Ensembl ID</td></tr>
+        <tr><td><code>spokegenelab:ncbi_gene_id</code></td><td>xsd:string</td><td>NCBI Gene ID</td></tr>
+    </table>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#e1f5fe', primaryTextColor: '#01579b', primaryBorderColor: '#0288d1', lineColor: '#0288d1' } });</script>
+</body>
+</html>

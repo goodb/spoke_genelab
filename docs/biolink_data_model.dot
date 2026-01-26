@@ -1,0 +1,152 @@
+// SPOKE-GeneLab Biolink Data Model
+// Graphviz DOT format - render with: dot -Tpng biolink_data_model.dot -o biolink_data_model.png
+// Or: dot -Tsvg biolink_data_model.dot -o biolink_data_model.svg
+
+digraph BiolinkDataModel {
+    // Graph settings
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.8;
+    ranksep=1.0;
+    fontname="Helvetica";
+    fontsize=12;
+
+    // Node defaults
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=10, margin="0.2,0.1"];
+    edge [fontname="Helvetica", fontsize=9, color="#555555"];
+
+    // Color definitions
+    // Biolink core: light blue
+    // Custom extensions: light orange
+    // External ontologies: light green
+    // Reified associations: light pink with dashed border
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        fontsize=11;
+        style="rounded";
+        color="#cccccc";
+
+        leg_biolink [label="Biolink Class", fillcolor="#e1f5fe", color="#0288d1"];
+        leg_custom [label="Custom Extension", fillcolor="#fff3e0", color="#ff9800"];
+        leg_ontology [label="External Ontology", fillcolor="#e8f5e9", color="#4caf50"];
+        leg_reified [label="Reified Association", fillcolor="#fce4ec", color="#e91e63", style="rounded,filled,dashed"];
+    }
+
+    // Core Entities subgraph
+    subgraph cluster_core {
+        label="Core Entities";
+        style="rounded";
+        color="#0288d1";
+        bgcolor="#f5f5f5";
+
+        Mission [label="Mission\nbiolink:Activity", fillcolor="#e1f5fe", color="#0288d1"];
+        Study [label="Study\nbiolink:Study", fillcolor="#e1f5fe", color="#0288d1"];
+        Assay [label="Assay\nbiolink:Assay", fillcolor="#e1f5fe", color="#0288d1"];
+    }
+
+    // Gene Entities
+    subgraph cluster_genes {
+        label="Gene Entities";
+        style="rounded";
+        color="#0288d1";
+        bgcolor="#f5f5f5";
+
+        MGene [label="MGene\nbiolink:Gene\n(Ensembl)", fillcolor="#e1f5fe", color="#0288d1"];
+        Gene [label="Gene\nbiolink:Gene\n(NCBI)", fillcolor="#e1f5fe", color="#0288d1"];
+    }
+
+    // Biological Context
+    subgraph cluster_biological {
+        label="Biological Context";
+        style="rounded";
+        color="#4caf50";
+        bgcolor="#f5f5f5";
+
+        Anatomy [label="Anatomy\nbiolink:AnatomicalEntity\n(UBERON)", fillcolor="#e8f5e9", color="#4caf50"];
+        CellType [label="CellType\nbiolink:Cell\n(CL)", fillcolor="#e8f5e9", color="#4caf50"];
+        Disease [label="Disease\nbiolink:Disease\n(MONDO)", fillcolor="#e8f5e9", color="#4caf50"];
+    }
+
+    // Sample Characteristics
+    subgraph cluster_characteristics {
+        label="Sample Characteristics";
+        style="rounded";
+        color="#4caf50";
+        bgcolor="#f5f5f5";
+
+        Sex [label="Sex\nbiolink:BiologicalSex\n(PATO)", fillcolor="#e8f5e9", color="#4caf50"];
+        DevStage [label="DevelopmentalStage\nbiolink:LifeStage\n(EFO)", fillcolor="#e8f5e9", color="#4caf50"];
+        EthnicGrp [label="EthnicGroup\nbiolink:Population\n(HANCESTRO)", fillcolor="#e8f5e9", color="#4caf50"];
+        OrgStatus [label="OrganismStatus\nbiolink:Attribute\n(PATO)", fillcolor="#e8f5e9", color="#4caf50"];
+    }
+
+    // Functional Enrichment
+    subgraph cluster_enrichment {
+        label="Functional Enrichment";
+        style="rounded";
+        color="#ff9800";
+        bgcolor="#f5f5f5";
+
+        PathEnrich [label="PathwayEnrichment\nbiolink:Association", fillcolor="#fff3e0", color="#ff9800"];
+        GOTerm [label="GOTerm\nbiolink:BiologicalProcess\nbiolink:MolecularActivity\nbiolink:CellularComponent\n(GO)", fillcolor="#e8f5e9", color="#4caf50"];
+        Reactome [label="ReactomePathway\nbiolink:Pathway", fillcolor="#e8f5e9", color="#4caf50"];
+        InterPro [label="InterProDomain\nbiolink:ProteinDomain", fillcolor="#e8f5e9", color="#4caf50"];
+    }
+
+    // Methylation
+    subgraph cluster_methylation {
+        label="Methylation";
+        style="rounded";
+        color="#ff9800";
+        bgcolor="#f5f5f5";
+
+        MethRegion [label="MethylationRegion\nbiolink:GenomicEntity", fillcolor="#fff3e0", color="#ff9800"];
+    }
+
+    // Reified Associations
+    subgraph cluster_reified {
+        label="Reified Associations";
+        style="rounded";
+        color="#e91e63";
+        bgcolor="#f5f5f5";
+
+        DEAssoc [label="DE Association\nbiolink:GeneExpressionMixin\n─────────────\nlog2fc: float\nadj_p_value: float", fillcolor="#fce4ec", color="#e91e63", style="rounded,filled,dashed"];
+        DMAssoc [label="DM Association\nbiolink:Association\n─────────────\nlog2fc: float\nadj_p_value: float", fillcolor="#fce4ec", color="#e91e63", style="rounded,filled,dashed"];
+    }
+
+    // Relationships - Core
+    Mission -> Study [label="has_part", color="#0288d1"];
+    Study -> Assay [label="has_output", color="#0288d1"];
+
+    // Study characteristics
+    Study -> Disease [label="studies", color="#4caf50"];
+    Study -> Sex [label="has_attribute", color="#4caf50"];
+    Study -> DevStage [label="has_attribute", color="#4caf50"];
+    Study -> EthnicGrp [label="has_attribute", color="#4caf50"];
+    Study -> OrgStatus [label="has_attribute", color="#4caf50"];
+
+    // Assay to biological context
+    Assay -> Anatomy [label="has_input", color="#4caf50"];
+    Assay -> CellType [label="has_input", color="#4caf50"];
+    Assay -> Disease [label="has_input", color="#4caf50"];
+
+    // Differential expression (reified)
+    Assay -> DEAssoc [label="subject", style="dashed", color="#e91e63"];
+    DEAssoc -> MGene [label="object\n(affects_expression_of)", style="dashed", color="#e91e63"];
+
+    // Differential methylation (reified)
+    Assay -> DMAssoc [label="subject", style="dashed", color="#e91e63"];
+    DMAssoc -> MethRegion [label="object\n(affects)", style="dashed", color="#e91e63"];
+
+    // Gene relationships
+    MGene -> Gene [label="orthologous_to", color="#0288d1"];
+    MGene -> MethRegion [label="overlaps", color="#ff9800"];
+
+    // Enrichment relationships
+    Assay -> PathEnrich [label="has_output", color="#ff9800"];
+    PathEnrich -> GOTerm [label="participates_in", color="#4caf50"];
+    PathEnrich -> Reactome [label="participates_in", color="#4caf50"];
+    PathEnrich -> InterPro [label="participates_in", color="#4caf50"];
+}
