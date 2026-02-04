@@ -114,3 +114,6 @@ notebooks_dev/
 data/
 examples_dev/
 kg/v*/data/
+output/.DS_Store
+.DS_Store
+output/.DS_Store

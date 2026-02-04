@@ -3,9 +3,10 @@ GEA Pipeline orchestrator.
 
 Main orchestration module for processing GEA experiment directories
 and producing graph outputs (Neo4j CSV and/or RDF).
+
+Supports incremental batch processing with checkpoint/restart capability.
 """
 
-import os
 import time
 from pathlib import Path
 from typing import Dict, List, Optional, Union
@@ -292,21 +293,36 @@ def process_gea_experiment(
 def process_gea_batch(
     experiments_dir: Union[str, Path],
     config: Optional[Config] = None,
+    output_dir: Optional[Union[str, Path]] = None,
     **kwargs,
 ) -> GEAPipelineResult:
     """
     Process all GEA experiments in a directory.
 
+    Each experiment produces one RDF file named after the experiment.
+    Already-processed experiments (existing RDF files) are skipped.
+
     Args:
         experiments_dir: Directory containing experiment subdirectories
         config: Optional Config object
+        output_dir: Output directory for RDF files
         **kwargs: Additional arguments passed to process_gea_experiment
 
     Returns:
         GEAPipelineResult with combined data from all experiments
     """
+    from ..rdf.turtle_writer import TurtleWriter
+
     combined_result = GEAPipelineResult()
     experiments_dir = Path(experiments_dir)
+
+    # Set up output path
+    if output_dir:
+        output_path = Path(output_dir)
+        rdf_dir = output_path / "rdf"
+        rdf_dir.mkdir(parents=True, exist_ok=True)
+    else:
+        rdf_dir = None
 
     # Find experiment directories (sorted for consistent ordering)
     exp_dirs = sorted([
@@ -315,7 +331,23 @@ def process_gea_batch(
     ])
     total = len(exp_dirs)
 
+    # Check which experiments already have RDF files
+    if rdf_dir:
+        existing_rdf = {f.stem for f in rdf_dir.glob("*.ttl")}
+        # Map experiment dir name (E-GEOD-123-gea) to RDF name (E-GEOD-123)
+        remaining_dirs = [
+            d for d in exp_dirs
+            if d.name.replace("-gea", "") not in existing_rdf
+        ]
+        skipped = total - len(remaining_dirs)
+    else:
+        remaining_dirs = exp_dirs
+        skipped = 0
+
     print(f"Found {total} experiment directories")
+    if skipped > 0:
+        print(f"Skipping {skipped} already processed (RDF files exist)")
+    print(f"Processing {len(remaining_dirs)} remaining experiments")
     print("=" * 60)
 
     # Track statistics
@@ -323,33 +355,52 @@ def process_gea_batch(
     failed = 0
     start_time = time.time()
 
-    for i, exp_dir in enumerate(exp_dirs, 1):
+    for i, exp_dir in enumerate(remaining_dirs, 1):
+        exp_name = exp_dir.name
+        # RDF filename: E-GEOD-123-gea -> E-GEOD-123.ttl
+        rdf_name = exp_name.replace("-gea", "") + ".ttl"
+
         try:
             # Print progress with ETA
             elapsed = time.time() - start_time
-            rate = processed / elapsed if elapsed > 0 else 0
-            eta = (total - i) / rate if rate > 0 else 0
+            rate = processed / elapsed if elapsed > 0 and processed > 0 else 0
+            remaining = len(remaining_dirs) - i
+            eta = remaining / rate if rate > 0 else 0
 
-            print(f"[{i}/{total}] Processing {exp_dir.name}... (ETA: {eta/60:.1f} min)")
+            total_done = skipped + i
+            print(f"[{total_done}/{total}] {exp_name} -> {rdf_name} (ETA: {eta/60:.1f} min)")
 
             exp_result = process_gea_experiment(exp_dir, config, **kwargs)
 
-            # Merge results
+            # Merge into combined result
             for node_type, df in exp_result.nodes.items():
                 combined_result.add_nodes(node_type, df)
             for rel_type, df in exp_result.relationships.items():
                 combined_result.add_relationships(rel_type, df)
 
-            if exp_result.errors:
-                combined_result.errors.extend(
-                    [f"{exp_dir.name}: {e}" for e in exp_result.errors]
-                )
-                failed += 1
-            else:
+            # Write individual RDF file
+            if rdf_dir and not exp_result.errors:
+                rdf_file = rdf_dir / rdf_name
+                writer = TurtleWriter(rdf_file)
+
+                for node_type, df in exp_result.nodes.items():
+                    if not df.empty:
+                        writer.add_nodes_from_dataframe(df, node_type)
+                for rel_type, df in exp_result.relationships.items():
+                    if not df.empty:
+                        writer.add_relationships_from_dataframe(df, rel_type)
+
+                writer.write()
                 processed += 1
 
+            elif exp_result.errors:
+                combined_result.errors.extend(
+                    [f"{exp_name}: {e}" for e in exp_result.errors]
+                )
+                failed += 1
+
         except Exception as e:
-            combined_result.errors.append(f"{exp_dir.name}: {e}")
+            combined_result.errors.append(f"{exp_name}: {e}")
             failed += 1
             print(f"  ERROR: {e}")
 
@@ -357,9 +408,20 @@ def process_gea_batch(
     elapsed = time.time() - start_time
     print("=" * 60)
     print(f"BATCH PROCESSING COMPLETE")
-    print(f"  Processed: {processed}/{total}")
+    print(f"  Total experiments: {total}")
+    print(f"  Already processed: {skipped}")
+    print(f"  Processed this run: {processed}")
     print(f"  Failed: {failed}")
     print(f"  Time: {elapsed/60:.1f} minutes")
+    if rdf_dir:
+        print(f"  Output directory: {rdf_dir}")
+
+    # Save errors to file
+    if combined_result.errors and rdf_dir:
+        error_file = rdf_dir / "errors.txt"
+        with open(error_file, "w") as f:
+            f.write("\n".join(combined_result.errors))
+        print(f"  Errors saved to: {error_file}")
 
     return combined_result
 
@@ -393,44 +455,66 @@ def run_gea_pipeline(
     if "-gea" in input_path.name:
         # Single experiment
         result = process_gea_experiment(input_path, config, **kwargs)
+
+        # Output CSV files
+        if output_csv:
+            node_dir = output_path / "nodes"
+            rel_dir = output_path / "relationships"
+            node_dir.mkdir(parents=True, exist_ok=True)
+            rel_dir.mkdir(parents=True, exist_ok=True)
+
+            save_graph_to_csv(
+                result.nodes,
+                result.relationships,
+                node_dir,
+                rel_dir,
+            )
+
+        # Output RDF file (named after experiment)
+        if output_rdf:
+            from ..rdf.turtle_writer import write_graph_to_turtle
+
+            rdf_dir = output_path / "rdf"
+            rdf_dir.mkdir(parents=True, exist_ok=True)
+
+            # Name file after experiment: E-GEOD-123-gea -> E-GEOD-123.ttl
+            exp_name = input_path.name.replace("-gea", "")
+            rdf_file = rdf_dir / f"{exp_name}.ttl"
+
+            write_graph_to_turtle(
+                result.nodes,
+                result.relationships,
+                rdf_file,
+            )
+
+            # Save errors to file if any
+            if result.errors:
+                error_file = rdf_file.with_suffix(".errors.txt")
+                with open(error_file, "w") as f:
+                    f.write("\n".join(result.errors))
+                print(f"Errors saved to: {error_file}")
     else:
-        # Batch processing
-        result = process_gea_batch(input_path, config, **kwargs)
-
-    # Output CSV files
-    if output_csv:
-        node_dir = output_path / "nodes"
-        rel_dir = output_path / "relationships"
-        node_dir.mkdir(parents=True, exist_ok=True)
-        rel_dir.mkdir(parents=True, exist_ok=True)
-
-        save_graph_to_csv(
-            result.nodes,
-            result.relationships,
-            node_dir,
-            rel_dir,
+        # Batch processing - one RDF file per experiment
+        result = process_gea_batch(
+            input_path,
+            config,
+            output_dir=output_path if output_rdf else None,
+            **kwargs,
         )
 
-    # Output RDF files
-    if output_rdf:
-        from ..rdf.turtle_writer import write_graph_to_turtle
+        # Output CSV files (after batch completes)
+        if output_csv:
+            node_dir = output_path / "nodes"
+            rel_dir = output_path / "relationships"
+            node_dir.mkdir(parents=True, exist_ok=True)
+            rel_dir.mkdir(parents=True, exist_ok=True)
 
-        rdf_dir = output_path / "rdf"
-        rdf_dir.mkdir(parents=True, exist_ok=True)
-
-        rdf_file = rdf_dir / "gxa_rdf.ttl"
-        write_graph_to_turtle(
-            result.nodes,
-            result.relationships,
-            rdf_file,
-        )
-
-        # Save errors to file if any
-        if result.errors:
-            error_file = rdf_file.with_suffix(".errors.txt")
-            with open(error_file, "w") as f:
-                f.write("\n".join(result.errors))
-            print(f"Errors saved to: {error_file}")
+            save_graph_to_csv(
+                result.nodes,
+                result.relationships,
+                node_dir,
+                rel_dir,
+            )
 
     return result
 
@@ -438,7 +522,21 @@ def run_gea_pipeline(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="GEA Pipeline")
+    parser = argparse.ArgumentParser(
+        description="GEA Pipeline - Process Gene Expression Atlas experiments to RDF/CSV",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Process single experiment
+  python -m scripts.gea.gea_pipeline /path/to/E-GEOD-5281-gea -o ./output --rdf
+
+  # Process all experiments (one RDF file per experiment, restartable)
+  python -m scripts.gea.gea_pipeline /path/to/gea/ -o ./output --rdf
+
+  # Resume interrupted batch (automatically skips experiments with existing RDF)
+  python -m scripts.gea.gea_pipeline /path/to/gea/ -o ./output --rdf
+        """,
+    )
     parser.add_argument("input_dir", help="Input directory (experiment or batch)")
     parser.add_argument("--output-dir", "-o", default="./output", help="Output directory")
     parser.add_argument("--csv", action="store_true", help="Output Neo4j CSV files")

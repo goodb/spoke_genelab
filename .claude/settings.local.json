@@ -13,7 +13,14 @@
       "WebFetch(domain:ftp.ebi.ac.uk)",
       "Bash(python -m scripts.gea.gea_downloader:*)",
       "Bash(cat:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "WebFetch(domain:biolink.github.io)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(head:*)",
+      "Bash(find:*)",
+      "Bash(pkill:*)",
+      "Bash(grep:*)",
+      "Bash(dot -Tsvg:*)"
     ]
   }
 }
